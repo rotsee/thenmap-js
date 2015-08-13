@@ -7,7 +7,8 @@ Usage:
 <script>
 var settings = {
   dataKey: "0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE",
-  dataset: "se-7"
+  dataset: "se-7",
+  projection: "sweref99"
 }
 Thenmap.init("map", settings);
 </script>
@@ -18,12 +19,12 @@ var Thenmap = {
 
   w: 940,
   h: 600,
-  apiUrl: "http://localhost:3000/v1/",
-  dataKey: "0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE",
+  apiUrl: "http://thenmap-api.herokuapp.com/v1/", //http://localhost:3000/v1/",
+  dataKey: null,
   dataset: "se-7",
-  date: 1991,
+  date: null,
   el: null,
-  projection: "sweref99",
+  projection: null,
 
   init: function(elIdentifier, settings) {
     var self = this;
