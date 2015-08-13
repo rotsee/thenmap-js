@@ -22,9 +22,9 @@ var Thenmap = {
   apiUrl: "http://thenmap-api.herokuapp.com/v1/", //http://localhost:3000/v1/",
   dataKey: null,
   dataset: "se-7",
-  date: null,
+  date: 2015,
   el: null,
-  projection: null,
+  projection: "sweref99",
 
   init: function(elIdentifier, settings) {
     var self = this;
