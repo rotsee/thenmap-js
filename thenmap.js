@@ -17,9 +17,12 @@ Thenmap.init("map", settings);
 
 var Thenmap = {
 
+  debug: false,
+
   w: 940,
   h: 600,
-  apiUrl: "//thenmap-api.herokuapp.com/v1/", //http://localhost:3000/v1/",
+  apiUrl: "//thenmap-api.herokuapp.com/v1/",
+  localApiUrl: "http://localhost:3000/v1/", //for debugging
   dataKey: null,
   dataset: "se-7",
   date: 2015,
@@ -42,7 +45,14 @@ var Thenmap = {
     }
 
     var httpClient = self.HttpClient;
-    httpClient.get(self.apiUrl + self.dataset + "/svg/" + self.date + "?projection=" + self.projection, function(response) {
+    var api = self.debug ? self.localApiUrl : self.apiUrl;
+    api += self.dataset;
+    api += '/svg/';
+    api += self.date;
+    if (self.projection !== null) {
+          api += "?projection=" + self.projection;
+    }
+    httpClient.get(api, function(response) {
       var svgString = JSON.parse(response).svg;
 
       // Something of an hack, to make sure SVG is rendered
