@@ -19,7 +19,7 @@ var Thenmap = {
 
   w: 940,
   h: 600,
-  apiUrl: "http://thenmap-api.herokuapp.com/v1/", //http://localhost:3000/v1/",
+  apiUrl: "//thenmap-api.herokuapp.com/v1/", //http://localhost:3000/v1/",
   dataKey: null,
   dataset: "se-7",
   date: 2015,
