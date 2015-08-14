@@ -137,7 +137,7 @@ var Thenmap = {
         var d = data[i];
 
         // Make both FF0000 and #FF0000 valid input 
-        if (d.color.slice(0,1) !== "#") {
+        if (d.color.substring(0,1) !== "#") {
           d.color = "#" + d.color;
         }
 
