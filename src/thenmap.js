@@ -72,9 +72,11 @@ var Thenmap = {
 
     });
 
+    // Color the map if a spreadsheet key is given
     if (self.settings.dataKey) {
       self.ColorLayer.init(self.settings.dataKey);
     }
+    
 
   },  // init
 
@@ -102,18 +104,43 @@ var Thenmap = {
         simpleSheet: true
       })
     },
-    addCssRule: function(cssSelector, attribute, value) {
+    validColor: function(colorString) {
+      return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorString);
+    },
+    addCssRules: function(rules) {
       var css = document.createElement("style");
       css.type = "text/css";
-      css.innerHTML = cssSelector + " { " + attribute + ": " + value+ " }";
+      css.innerHTML = "";
+      for (var i = 0; i < rules.length; i++) {
+        var d = rules[i];
+        css.innerHTML += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
+      }
       document.body.appendChild(css);
     },
     render: function(data) {
       var self = this;
+      var cssRules = [];
+
+      // Create a set of css rules based on data
       for (var i = 0; i < data.length; i++) {
         var d = data[i];
-        self.addCssRule("." + d.id, "background-color", d.color );
+
+        // Make both FF0000 and #FF0000 valid input 
+        if (d.color.slice(0,1) !== "#") {
+          d.color = "#" + d.color;
+        }
+
+        if ( self.validColor(d.color) ) {
+          cssRules.push({
+            selector: "." + d.id,
+            attribute: "fill",
+            value: d.color
+          });
+        }
       }
+
+      // Render style tag
+      self.addCssRules(cssRules);
     },
     init: function(spreadsheetKey) {
       var self = this;
