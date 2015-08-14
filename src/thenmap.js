@@ -28,7 +28,7 @@ var Thenmap = {
     h: 600,
     dataKey: null,
     dataset: "se-7",
-    date: 2015,
+    date: new Date().toISOString(), //current date
     projection: null,
   },
 
