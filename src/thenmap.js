@@ -133,7 +133,7 @@ var Thenmap = {
     /* Checks that a string is a valid HEX color
     */
     validColor: function(colorString) {
-      return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorString);
+      return /(^#[0-9A-F]{6}$)/i.test(colorString);
     },
 
     /*  Take an array of selectors, attributes and values, and add to style tag
