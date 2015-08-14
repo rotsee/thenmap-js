@@ -50,6 +50,15 @@ var Thenmap = {
       // not a valid identifier
     }
 
+    // set default style
+    this.ColorLayer.addCssRules([
+      {
+        selector: "svg.thenmap",
+        attribute: "fill",
+        value: "gainsboro"
+      }
+    ]);
+
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
       var svgString = JSON.parse(response).svg;
@@ -58,12 +67,11 @@ var Thenmap = {
       // Creating a SVG element will not make the SVG render
       // in all browsers. innerHTML will.
       var tmp = document.createElement("div");
-      tmp.innerHTML = "<svg>" + svgString + "</svg>";
+      tmp.innerHTML = "<svg class='thenmap'>" + svgString + "</svg>";
       var svg = tmp.getElementsByTagName('svg')[0];
       svg.setAttribute("width", self.settings.w);
       svg.setAttribute("height", self.settings.h);
       self.el.appendChild(svg);
-
     });
 
     // Color the map if a spreadsheet key is given
