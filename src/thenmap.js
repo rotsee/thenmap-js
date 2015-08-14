@@ -21,6 +21,7 @@ var Thenmap = {
   apiUrl: "//thenmap-api.herokuapp.com/v1/",
   localApiUrl: "http://localhost:3000/v1/", //for debugging
   el: null,
+  defaultColor: "gainsboro",
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
@@ -55,7 +56,7 @@ var Thenmap = {
       {
         selector: "svg.thenmap",
         attribute: "fill",
-        value: "gainsboro"
+        value: this.defaultColor
       }
     ]);
 
@@ -137,26 +138,59 @@ var Thenmap = {
       document.getElementsByTagName("head")[0].appendChild(css);
     }, // addCssRules
 
+    /* returns the most commons value in object, for the given key */
+    getMostCommonValue: function(data, key) {
+      var dataArray = [];
+      for(var d in data) {
+          dataArray.push(data[d][key]);
+      }
+      return dataArray.sort(function(a,b){
+        return dataArray.filter(function(v){ return v===a }).length
+             - dataArray.filter(function(v){ return v===b }).length;
+      }).pop();;
+
+    },
+
+    getColorCode: function(string){
+
+      // Make both FF0000 and #FF0000 valid input 
+      if (string.substring(0,1) !== "#") {
+        string = "#" + string;
+      }
+      if (this.validColor(string)) {
+        return string;
+      } else {
+        return this.defaultColor;
+      }
+
+    },
+
     /* Colorizes map 
     */
     render: function(data) {
       var self = this;
       var cssRules = [];
 
+      // Use the most common color as default, to reduce number of CSS rules
+      var mostCommonColor = this.getMostCommonValue(data, "color");
+      mostCommonColor = this.getColorCode(mostCommonColor);
+
+      cssRules.push({
+        selector: "svg.thenmap",
+        attribute: "fill",
+        value: mostCommonColor
+      });
+
       // Create a set of css rules based on data
       for (var i = 0; i < data.length; i++) {
         var d = data[i];
+        var colorCode = self.getColorCode(d.color);
 
-        // Make both FF0000 and #FF0000 valid input 
-        if (d.color.substring(0,1) !== "#") {
-          d.color = "#" + d.color;
-        }
-
-        if ( self.validColor(d.color) ) {
+        if (colorCode !== mostCommonColor) {
           cssRules.push({
             selector: "." + d.id,
             attribute: "fill",
-            value: d.color
+            value: colorCode
           });
         }
       }
