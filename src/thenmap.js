@@ -23,6 +23,7 @@ var Thenmap = {
   el: null, //container element
   defaultColor: "gainsboro",
   svg: null, //svg element
+  css: null, //css element for dynamically adding styles
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
@@ -35,9 +36,8 @@ var Thenmap = {
   },
 
   init: function(elIdentifier, options) {
-    var self = this;   
+    var self = this;
     self.ColorLayer.thenmap = self;
- 
 
     // Apply settings
     self.settings = self.utils.extend(self.settings, options);
@@ -53,6 +53,11 @@ var Thenmap = {
     } else {
       // not a valid identifier
     }
+
+    // create CSS element for dynamic styling
+    var css = document.createElement("style");
+    document.getElementsByTagName("head")[0].appendChild(css);
+    this.css = css;
 
     // set default style for svg
     this.ColorLayer.addCssRules([
@@ -72,14 +77,12 @@ var Thenmap = {
                        "  animation: loading_data 1s linear infinite alternate;" +
                        "}   ";
 
-    var styleElement = document.createElement("style");
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
-    if (styleElement.styleSheet) {
+    if (self.css.styleSheet) {
         // IE
-        styleElement.styleSheet.cssText = loadingStyle;
+        self.css.styleSheet.cssText += loadingStyle;
     } else {
         // Other browsers
-        styleElement.innerHTML = loadingStyle;
+        self.css.innerHTML += loadingStyle;
     }
 
     var httpClient = self.HttpClient;
@@ -148,11 +151,10 @@ var Thenmap = {
       return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorString);
     },
 
-    /*  Takes an array of selectors, attributes and values and renders a style tag.
+    /*  Take an array of selectors, attributes and values, and add to style tag
     */
     addCssRules: function(rules) {
-      var css = document.createElement("style");
-      document.getElementsByTagName("head")[0].appendChild(css); //must come first, or IE will crash, according to http://stackoverflow.com/questions/707565/how-do-you-add-css-with-javascript
+      var css = this.thenmap.css;
 
       var text = "";
       var l = rules.length;
@@ -160,12 +162,13 @@ var Thenmap = {
         var d = rules[i];
         text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
       }
+
       if (css.styleSheet) {
           // IE
-          css.styleSheet.cssText = text;
+          css.styleSheet.cssText += text;
       } else {
           // Other browsers
-          css.innerHTML = text;
+          css.innerHTML += text;
       }
 
     }, // addCssRules
