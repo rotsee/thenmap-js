@@ -73,6 +73,7 @@ var Thenmap = {
                        "}   ";
 
     var styleElement = document.createElement("style");
+    document.getElementsByTagName("head")[0].appendChild(styleElement);
     if (styleElement.styleSheet) {
         // IE
         styleElement.styleSheet.cssText = loadingStyle;
@@ -80,7 +81,6 @@ var Thenmap = {
         // Other browsers
         styleElement.innerHTML = loadingStyle;
     }
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
 
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
@@ -152,14 +152,22 @@ var Thenmap = {
     */
     addCssRules: function(rules) {
       var css = document.createElement("style");
+      document.getElementsByTagName("head")[0].appendChild(css); //must come first, or IE will crash, according to http://stackoverflow.com/questions/707565/how-do-you-add-css-with-javascript
+
       var text = "";
       var l = rules.length;
       for (var i = 0; i < l; i++) {
         var d = rules[i];
         text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
       }
-      css.innerHTML = text;
-      document.getElementsByTagName("head")[0].appendChild(css);
+      if (css.styleSheet) {
+          // IE
+          css.styleSheet.cssText = text;
+      } else {
+          // Other browsers
+          css.innerHTML = text;
+      }
+
     }, // addCssRules
 
     /* Return the most commons value in object, for the given key
