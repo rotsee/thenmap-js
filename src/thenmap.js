@@ -138,12 +138,11 @@ var Thenmap = {
       document.getElementsByTagName("head")[0].appendChild(css);
     }, // addCssRules
 
-    /* returns the most commons value in object, for the given key */
+    /* Return the most commons value in object, for the given key
+    */
     getMostCommonValue: function(data, key) {
       var dataArray = [];
-      for(var d in data) {
-          dataArray.push(data[d][key]);
-      }
+      for(var d in data) {dataArray.push(data[d][key]);}
       return dataArray.sort(function(a,b){
         return dataArray.filter(function(v){ return v===a }).length
              - dataArray.filter(function(v){ return v===b }).length;
@@ -151,6 +150,8 @@ var Thenmap = {
 
     },
 
+    /* Sanitize and validate a color code
+    */
     getColorCode: function(string){
 
       // Make both FF0000 and #FF0000 valid input 
