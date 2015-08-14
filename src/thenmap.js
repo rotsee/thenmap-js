@@ -11,7 +11,7 @@ var Thenmap = {
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
     w: 940,
-    h: 600,
+    h: 800,
     dataKey: null,
     dataset: "se-7",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
@@ -50,6 +50,16 @@ var Thenmap = {
         selector: "svg.thenmap",
         attribute: "fill",
         value: this.defaultColor
+      },
+      {
+        selector: "svg.thenmap",
+        attribute: "stroke",
+        value: "white"
+      },
+      {
+        selector: "svg.thenmap",
+        attribute: "stroke-width",
+        value: ".25px"
       }
     ]);
 
@@ -80,9 +90,14 @@ var Thenmap = {
       var tmp = document.createElement("div");
       tmp.innerHTML = "<svg class='thenmap'>" + svgString + "</svg>";
       self.svg = tmp.getElementsByTagName('svg')[0];
-      self.svg.setAttribute("width", self.settings.w);
-      self.svg.setAttribute("height", self.settings.h);
-      self.el.appendChild(self.svg);
+      self.svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
+      self.svg.style.height = self.settings.h + "px";
+      self.svg.style.width = self.settings.w + "px";
+
+      self.el.appendChild(self.svg); //append SVG before setting viewBox, to get size
+      var bbox = self.svg.getBBox();
+      self.svg.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
+
 
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
@@ -165,7 +180,7 @@ var Thenmap = {
     },
 
     /* Sanitize and validate a SVG color code
-       Accepts "#99cccc", "99cccc", "green" and "GREEN"
+       Accepts "#99cccc", "9cc", "green", and "rgb(1,32,42)"
     */
     getColorCode: function(string){
 
