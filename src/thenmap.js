@@ -18,19 +18,24 @@ Thenmap.init("map", settings);
 var Thenmap = {
 
   debug: false,
-
-  w: 940,
-  h: 600,
   apiUrl: "//thenmap-api.herokuapp.com/v1/",
   localApiUrl: "http://localhost:3000/v1/", //for debugging
-  dataKey: null,
-  dataset: "se-7",
-  date: 2015,
   el: null,
-  projection: "sweref99",
 
-  init: function(elIdentifier, settings) {
+  settings: {
+    w: 940,
+    h: 600,
+    dataKey: null,
+    dataset: "se-7",
+    date: 2015,
+    projection: "sweref99",
+  },
+
+  init: function(elIdentifier, options) {
     var self = this;    
+
+    // Apply settings
+    self.settings = self.utils.extend(self.settings, options);
 
     if (typeof elIdentifier === "string") {
       // If first character is #, remove. While technically a valid
@@ -46,11 +51,11 @@ var Thenmap = {
 
     var httpClient = self.HttpClient;
     var api = self.debug ? self.localApiUrl : self.apiUrl;
-    api += self.dataset;
+    api += self.settings.dataset;
     api += '/svg/';
-    api += self.date;
-    if (self.projection !== null) {
-          api += "?projection=" + self.projection;
+    api += self.settings.date;
+    if (self.settings.projection !== null) {
+          api += "?projection=" + self.settings.projection;
     }
     httpClient.get(api, function(response) {
       var svgString = JSON.parse(response).svg;
@@ -61,14 +66,14 @@ var Thenmap = {
       var tmp = document.createElement("div");
       tmp.innerHTML = "<svg>" + svgString + "</svg>";
       var svg = tmp.getElementsByTagName('svg')[0];
-      svg.setAttribute("width", self.w);
-      svg.setAttribute("height", self.h);
+      svg.setAttribute("width", self.settings.w);
+      svg.setAttribute("height", self.settings.h);
       self.el.appendChild(svg);
 
     });
 
     Tabletop.init({
-      key: settings.dataKey,
+      key: self.settings.dataKey,
       callback: function(data, tabletop) {
         console.log(data)
       },
@@ -89,6 +94,24 @@ var Thenmap = {
       httpRequest.open( "GET", url, true );            
       httpRequest.send( null );
     }
-  }  // HttpClient
+  },  // HttpClient
+
+  utils: {
+    extend: function ( defaults, options ) {
+      var extended = {};
+      var prop;
+      for (prop in defaults) {
+        if (Object.prototype.hasOwnProperty.call(defaults, prop)) {
+          extended[prop] = defaults[prop];
+        }
+      }
+      for (prop in options) {
+        if (Object.prototype.hasOwnProperty.call(options, prop)) {
+          extended[prop] = options[prop];
+        }
+      }
+      return extended;
+    } // Extend js object
+  }// Utils
 
 };
