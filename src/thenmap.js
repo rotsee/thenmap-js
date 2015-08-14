@@ -29,7 +29,7 @@ var Thenmap = {
     dataKey: null,
     dataset: "se-7",
     date: 2015,
-    projection: "sweref99",
+    projection: null,
   },
 
   init: function(elIdentifier, options) {
