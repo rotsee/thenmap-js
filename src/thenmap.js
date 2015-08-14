@@ -72,13 +72,9 @@ var Thenmap = {
 
     });
 
-    Tabletop.init({
-      key: self.settings.dataKey,
-      callback: function(data, tabletop) {
-        console.log(data)
-      },
-      simpleSheet: true
-    })
+    if (self.settings.dataKey) {
+      self.ColorLayer.init(self.settings.dataKey);
+    }
 
   },  // init
 
@@ -95,6 +91,28 @@ var Thenmap = {
       httpRequest.send( null );
     }
   },  // HttpClient
+
+  ColorLayer: {
+    getSpreadsheetData: function(spreadsheetKey, callback) {
+      Tabletop.init({
+        key: spreadsheetKey,
+        callback: function(data, tabletop) {
+          callback(data);
+        },
+        simpleSheet: true
+      })
+    },
+    render: function(data) {
+      console.log("Render!");
+      console.log(data);
+    },
+    init: function(spreadsheetKey) {
+      var self = this;
+      self.getSpreadsheetData(spreadsheetKey, function(data) {
+        self.render(data);
+      });
+    }
+  }, // ColorLayer
 
   utils: {
     extend: function ( defaults, options ) {
