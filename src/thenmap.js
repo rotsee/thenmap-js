@@ -166,15 +166,14 @@ var Thenmap = {
 
     /* Sanitize and validate a SVG color code
        Accepts "#99cccc", "99cccc", and "green"
-       Does not accept "9cc" (only valid in HTML)
     */
     getColorCode: function(string){
 
       var allowedColorNames = ["aliceblue","antiquewhite","aqua","aquamarine","azure","beige","bisque","black","blanchedalmond","blue","blueviolet","brown","burlywood","cadetblue","chartreuse","chocolate","coral","cornflowerblue","cornsilk","crimson","cyan","darkblue","darkcyan","darkgoldenrod","darkgray","darkgreen","darkgrey","darkkhaki","darkmagenta","darkolivegreen","darkorange","darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey","darkturquoise","darkviolet","deeppink","deepskyblue","dimgray","dimgrey","dodgerblue","firebrick","floralwhite","forestgreen","fuchsia","gainsboro","ghostwhite","gold","goldenrod","gray","grey","green","greenyellow","honeydew","hotpink","indianred","indigo","ivory","khaki","lavender","lavenderblush","lawngreen","lemonchiffon","lightblue","lightcoral","lightcyan","lightgoldenrodyellow","lightgray","lightgreen","lightgrey","    ","","lightpink","lightsalmon","lightseagreen","lightskyblue","lightslategray","lightslategrey","lightsteelblue","lightyellow","lime","limegreen","linen","magenta","maroon","mediumaquamarine","mediumblue","mediumorchid","mediumpurple","mediumseagreen","mediumslateblue","mediumspringgreen","mediumturquoise","mediumvioletred","midnightblue","mintcream","mistyrose","moccasin","navajowhite","navy","oldlace","olive","olivedrab","orange","orangered","orchid","palegoldenrod","palegreen","paleturquoise","palevioletred","papayawhip","peachpuff","peru","pink","plum","powderblue","purple","red","rosybrown","royalblue","saddlebrown","salmon","sandybrown","seagreen","seashell","sienna","silver","skyblue","slateblue","slategray","slategrey","snow","springgreen","steelblue","tan","teal","thistle","tomato","turquoise","violet","wheat","white","whitesmoke","yellow","yellowgreen"];
-      if (/(^#[0-9A-F]{6}$)/i.test(string)) {
+      if (/(^#[0-9A-F]{6}$){1,2}/i.test(string)) {
         // #00cccc
         return string;
-      } else if (/(^[0-9A-F]{6}$)/i.test(string)) {
+      } else if (/(^[0-9A-F]{6}$){1,2}/i.test(string)) {
         // 00cccc
         return "#" + string;
       } else if (allowedColorNames.indexOf(string) > -1) { // will work for all SVG capable browsers
@@ -198,7 +197,7 @@ var Thenmap = {
       mostCommonColor = this.getColorCode(mostCommonColor);
 
       cssRules.push({
-        selector: "svg.thenmap",
+        selector: "svg.thenmap path",
         attribute: "fill",
         value: mostCommonColor
       });
@@ -210,7 +209,7 @@ var Thenmap = {
 
         if (colorCode !== mostCommonColor) {
           cssRules.push({
-            selector: "." + d.id,
+            selector: "svg.thenmap ." + d.id,
             attribute: "fill",
             value: colorCode
           });
