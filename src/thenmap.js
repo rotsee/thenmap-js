@@ -22,6 +22,7 @@ var Thenmap = {
   localApiUrl: "http://localhost:3000/v1/", //for debugging
   el: null,
 
+  // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
     w: 940,
     h: 600,
@@ -76,8 +77,6 @@ var Thenmap = {
     if (self.settings.dataKey) {
       self.ColorLayer.init(self.settings.dataKey);
     }
-    
-
   },  // init
 
   HttpClient: {
@@ -95,6 +94,9 @@ var Thenmap = {
   },  // HttpClient
 
   ColorLayer: {
+
+    /* Fetches data from a Google Spreadsheet using Tabletop
+    */
     getSpreadsheetData: function(spreadsheetKey, callback) {
       Tabletop.init({
         key: spreadsheetKey,
@@ -103,10 +105,16 @@ var Thenmap = {
         },
         simpleSheet: true
       })
-    },
+    }, // getSpreadsheetData
+
+    /* Checks that a string is a valid HEX color
+    */
     validColor: function(colorString) {
       return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorString);
     },
+
+    /*  Takes an array of selectors, attributes and values and renders a style tag.
+    */
     addCssRules: function(rules) {
       var css = document.createElement("style");
       css.type = "text/css";
@@ -116,7 +124,10 @@ var Thenmap = {
         css.innerHTML += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
       }
       document.body.appendChild(css);
-    },
+    }, // addCssRules
+
+    /* Colorizes map 
+    */
     render: function(data) {
       var self = this;
       var cssRules = [];
@@ -141,14 +152,15 @@ var Thenmap = {
 
       // Render style tag
       self.addCssRules(cssRules);
-    },
+    }, // render
+
     init: function(spreadsheetKey) {
       var self = this;
       self.getSpreadsheetData(spreadsheetKey, function(data) {
         self.render(data);
       });
     }
-  }, // ColorLayer
+  }, // end of ColorLayer
 
   utils: {
     extend: function ( defaults, options ) {
