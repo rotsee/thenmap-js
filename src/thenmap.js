@@ -127,7 +127,6 @@ var Thenmap = {
     */
     addCssRules: function(rules) {
       var css = document.createElement("style");
-      css.type = "text/css";
       css.innerHTML = "";
       for (var i = 0; i < rules.length; i++) {
         var d = rules[i];
