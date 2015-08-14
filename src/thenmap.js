@@ -1,29 +1,12 @@
-/*
-Usage:
-
-<div id="map"></div>
-
-<script src="thenmap.js"></script>
-<script>
-var settings = {
-  dataKey: "0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE",
-  dataset: "se-7",
-  projection: "sweref99"
-}
-Thenmap.init("map", settings);
-</script>
-
-*/
-
 var Thenmap = {
 
   debug: false,
   apiUrl: "//thenmap-api.herokuapp.com/v1/",
   localApiUrl: "http://localhost:3000/v1/", //for debugging
   el: null, //container element
-  defaultColor: "gainsboro",
   svg: null, //svg element
   css: null, //css element for dynamically adding styles
+  defaultColor: "gainsboro",
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {

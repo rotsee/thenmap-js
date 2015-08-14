@@ -1,3 +1,16 @@
+Usage:
+
+    <div id="map"></div>
+
+    <script src="thenmap.js"></script>
+    <script>
+    var settings = {
+      dataKey: "0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE",
+      dataset: "se-7"
+    }
+    Thenmap.init("map", settings);
+    </script>
+
 For available datasets, se [the API documentation](http://thenmap-api.herokuapp.com/#datasets)
 
 ### Sample data
