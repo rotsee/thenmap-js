@@ -102,9 +102,18 @@ var Thenmap = {
         simpleSheet: true
       })
     },
+    addCssRule: function(cssSelector, attribute, value) {
+      var css = document.createElement("style");
+      css.type = "text/css";
+      css.innerHTML = cssSelector + " { " + attribute + ": " + value+ " }";
+      document.body.appendChild(css);
+    },
     render: function(data) {
-      console.log("Render!");
-      console.log(data);
+      var self = this;
+      for (var i = 0; i < data.length; i++) {
+        var d = data[i];
+        self.addCssRule("." + d.id, "background-color", d.color );
+      }
     },
     init: function(spreadsheetKey) {
       var self = this;
