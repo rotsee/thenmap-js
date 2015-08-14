@@ -18,6 +18,8 @@ var Thenmap = {
     projection: null,
   },
 
+  /* Entry point
+  */
   init: function(elIdentifier, options) {
     var self = this;
     self.ColorLayer.thenmap = self;
@@ -220,9 +222,10 @@ var Thenmap = {
 
     init: function(spreadsheetKey) {
       var self = this;
-      self.thenmap.el.className = "loading_data";
+      var oldClassName = self.thenmap.el.className || "";
+      self.thenmap.el.className = [oldClassName, "loading_data"].join(" ");
       self.getSpreadsheetData(spreadsheetKey, function(data) {
-        self.thenmap.el.className = "";
+        self.thenmap.el.className = oldClassName;
         self.render(data);
       });
     }
