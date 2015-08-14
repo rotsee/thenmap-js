@@ -181,7 +181,7 @@ var Thenmap = {
       if (this.validColor(string)) {
         return string;
       } else {
-        return this.defaultColor;
+        return this.thenmap.defaultColor;
       }
 
     },
