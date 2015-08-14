@@ -1,0 +1,33 @@
+{
+  "name": "thenmap-js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rotsee/thenmap-js",
+  "authors": [
+    "leo.wallentin@gmail.com",
+    "jens.finnas@gmail.com"
+  ],
+  "description": "For making historical maps",
+  "main": "thenmap.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "maps",
+    "history",
+    "borders",
+    "geojson",
+    "svg"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "tabletop": "1.4.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/_bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -30,7 +30,7 @@ var Thenmap = {
   projection: "sweref99",
 
   init: function(elIdentifier, settings) {
-    var self = this;
+    var self = this;    
 
     if (typeof elIdentifier === "string") {
       // If first character is #, remove. While technically a valid
@@ -66,6 +66,14 @@ var Thenmap = {
       self.el.appendChild(svg);
 
     });
+
+    Tabletop.init({
+      key: settings.dataKey,
+      callback: function(data, tabletop) {
+        console.log(data)
+      },
+      simpleSheet: true
+    })
 
   },  // init
 
