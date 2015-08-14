@@ -20,8 +20,9 @@ var Thenmap = {
   debug: false,
   apiUrl: "//thenmap-api.herokuapp.com/v1/",
   localApiUrl: "http://localhost:3000/v1/", //for debugging
-  el: null,
+  el: null, //container element
   defaultColor: "gainsboro",
+  svg: null, //svg element
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
@@ -34,7 +35,9 @@ var Thenmap = {
   },
 
   init: function(elIdentifier, options) {
-    var self = this;    
+    var self = this;   
+    self.ColorLayer.thenmap = self;
+ 
 
     // Apply settings
     self.settings = self.utils.extend(self.settings, options);
@@ -51,7 +54,7 @@ var Thenmap = {
       // not a valid identifier
     }
 
-    // set default style
+    // set default style for svg
     this.ColorLayer.addCssRules([
       {
         selector: "svg.thenmap",
@@ -59,6 +62,25 @@ var Thenmap = {
         value: this.defaultColor
       }
     ]);
+
+    // set default loading style
+    var loadingStyle = "@keyframes loading_data {" + 
+                       "  0%   {fill-opacity: 0}" +
+                       "  100% {fill-opacity: 1}" +
+                       "}" +
+                       ".loading_data path {" +
+                       "  animation: loading_data 1s linear infinite alternate;" +
+                       "}   ";
+
+    var styleElement = document.createElement("style");
+    if (styleElement.styleSheet) {
+        // IE
+        styleElement.styleSheet.cssText = loadingStyle;
+    } else {
+        // Other browsers
+        styleElement.innerHTML = loadingStyle;
+    }
+    document.getElementsByTagName("head")[0].appendChild(styleElement);
 
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
@@ -69,16 +91,18 @@ var Thenmap = {
       // in all browsers. innerHTML will.
       var tmp = document.createElement("div");
       tmp.innerHTML = "<svg class='thenmap'>" + svgString + "</svg>";
-      var svg = tmp.getElementsByTagName('svg')[0];
-      svg.setAttribute("width", self.settings.w);
-      svg.setAttribute("height", self.settings.h);
-      self.el.appendChild(svg);
+      self.svg = tmp.getElementsByTagName('svg')[0];
+      self.svg.setAttribute("width", self.settings.w);
+      self.svg.setAttribute("height", self.settings.h);
+      self.el.appendChild(self.svg);
+
+      // Color the map if a spreadsheet key is given
+      if (self.settings.dataKey) {
+        self.ColorLayer.init(self.settings.dataKey);
+      }
+
     });
 
-    // Color the map if a spreadsheet key is given
-    if (self.settings.dataKey) {
-      self.ColorLayer.init(self.settings.dataKey);
-    }
   },  // function init
 
   createApiUrl: function() {
@@ -202,7 +226,9 @@ var Thenmap = {
 
     init: function(spreadsheetKey) {
       var self = this;
+      self.thenmap.el.className = "loading_data";
       self.getSpreadsheetData(spreadsheetKey, function(data) {
+        self.thenmap.el.className = "";
         self.render(data);
       });
     }
