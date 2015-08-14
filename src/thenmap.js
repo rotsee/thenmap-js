@@ -127,12 +127,14 @@ var Thenmap = {
     */
     addCssRules: function(rules) {
       var css = document.createElement("style");
-      css.innerHTML = "";
-      for (var i = 0; i < rules.length; i++) {
+      var text = "";
+      var l = rules.length;
+      for (var i = 0; i < l; i++) {
         var d = rules[i];
-        css.innerHTML += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
+        text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
       }
-      document.body.appendChild(css);
+      css.innerHTML = text;
+      document.getElementsByTagName("head")[0].appendChild(css);
     }, // addCssRules
 
     /* Colorizes map 
