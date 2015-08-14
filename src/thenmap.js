@@ -51,14 +51,7 @@ var Thenmap = {
     }
 
     var httpClient = self.HttpClient;
-    var api = self.debug ? self.localApiUrl : self.apiUrl;
-    api += self.settings.dataset;
-    api += '/svg/';
-    api += self.settings.date;
-    if (self.settings.projection !== null) {
-          api += "?projection=" + self.settings.projection;
-    }
-    httpClient.get(api, function(response) {
+    httpClient.get(self.createApiUrl(), function(response) {
       var svgString = JSON.parse(response).svg;
 
       // Something of an hack, to make sure SVG is rendered
@@ -77,7 +70,16 @@ var Thenmap = {
     if (self.settings.dataKey) {
       self.ColorLayer.init(self.settings.dataKey);
     }
-  },  // init
+  },  // function init
+
+  createApiUrl: function() {
+    var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
+    apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
+    if (this.settings.projection !== null) {
+          apiUrl += "?projection=" + this.settings.projection;
+    }
+    return apiUrl;
+  },  // function createApiUrl
 
   HttpClient: {
     get: function(url, callback) {
