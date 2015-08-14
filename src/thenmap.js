@@ -28,7 +28,7 @@ var Thenmap = {
     h: 600,
     dataKey: null,
     dataset: "se-7",
-    date: new Date().toISOString(), //current date
+    date: new Date().toISOString(), //current date, works in any browser that can display SVG
     projection: null,
   },
 
@@ -44,6 +44,7 @@ var Thenmap = {
       elIdentifier = elIdentifier.replace(/^#/, '');
       self.el = document.getElementById(elIdentifier);
     } else if (elIdentifier.nodeType) {
+      // User gave us a valid reference to an element
       self.el = elIdentifier;
     } else {
       // not a valid identifier
