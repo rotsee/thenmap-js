@@ -1,4 +1,4 @@
-
+For available datasets, se [the API documentation](http://thenmap-api.herokuapp.com/#datasets)
 
 ### Sample data
 
