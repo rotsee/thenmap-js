@@ -46,8 +46,7 @@ var Thenmap = {
     } else if (elIdentifier.nodeType) {
       self.el = elIdentifier;
     } else {
-      self.el = document.createElement("div");
-      document.body.appendChild(self.el);
+      // not a valid identifier
     }
 
     var httpClient = self.HttpClient;
