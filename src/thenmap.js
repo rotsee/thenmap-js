@@ -130,12 +130,6 @@ var Thenmap = {
       })
     }, // getSpreadsheetData
 
-    /* Checks that a string is a valid HEX color
-    */
-    validColor: function(colorString) {
-      return /(^#[0-9A-F]{6}$)/i.test(colorString);
-    },
-
     /*  Take an array of selectors, attributes and values, and add to style tag
     */
     addCssRules: function(rules) {
@@ -170,17 +164,24 @@ var Thenmap = {
 
     },
 
-    /* Sanitize and validate a color code
+    /* Sanitize and validate a SVG color code
+       Accepts "#99cccc", "99cccc", and "green"
+       Does not accept "9cc" (only valid in HTML)
     */
     getColorCode: function(string){
 
-      // Make both FF0000 and #FF0000 valid input 
-      if (string.substring(0,1) !== "#") {
-        string = "#" + string;
-      }
-      if (this.validColor(string)) {
+      var colorCode = ["green"];
+      if (/(^#[0-9A-F]{6}$)/i.test(string)) {
+        // #00cccc
+        return string;
+      } else if (/(^[0-9A-F]{6}$)/i.test(string)) {
+        // 00cccc
+        return "#" + string;
+      } else if (colorCodes.indexOf(string) > -1) { // will work for all SVG capable browsers
+        // green
         return string;
       } else {
+        // *invalid
         return this.thenmap.defaultColor;
       }
 
