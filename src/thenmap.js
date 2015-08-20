@@ -65,8 +65,8 @@ var Thenmap = {
 
     // set default loading style
     var loadingStyle = "@keyframes loading_data {" + 
-                       "  0%   {fill-opacity: 0}" +
-                       "  100% {fill-opacity: 1}" +
+                       "  0%   {fill-opacity: .25}" +
+                       "  100% {fill-opacity: .75}" +
                        "}" +
                        ".loading_data path {" +
                        "  animation: loading_data 1s linear infinite alternate;" +
@@ -88,7 +88,7 @@ var Thenmap = {
       // Creating a SVG element will not make the SVG render
       // in all browsers. innerHTML will.
       var tmp = document.createElement("div");
-      tmp.innerHTML = "<svg class='thenmap'>" + svgString + "</svg>";
+      tmp.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' class='thenmap'>" + svgString + "</svg>";
       self.svg = tmp.getElementsByTagName('svg')[0];
       self.svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
       self.svg.style.height = self.settings.h + "px";
@@ -101,7 +101,7 @@ var Thenmap = {
 
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
-        self.ColorLayer.init(self.settings.dataKey);
+//        self.ColorLayer.init(self.settings.dataKey);
       }
 
     });
