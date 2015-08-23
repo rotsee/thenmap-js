@@ -111,9 +111,14 @@ var Thenmap = {
   createApiUrl: function() {
     var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
     apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
+    var options = [];
     if (this.settings.projection !== null) {
-          apiUrl += "?projection=" + this.settings.projection;
+          options.push("projection=" + this.settings.projection);
     }
+    if (this.settings.language !== null) {
+          options.push("language=" + this.settings.language);
+    }
+    apiUrl += "?" + options.join("&");
     return apiUrl;
   },  // function createApiUrl
 
