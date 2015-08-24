@@ -10,12 +10,13 @@ var Thenmap = {
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
-    w: 940,
-    h: 800,
+    width: 800,
+    height: null,
+    language: null,
+    projection: null,
     dataKey: null,
     dataset: "se-7",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
-    projection: null,
   },
 
   /* Entry point
@@ -88,15 +89,13 @@ var Thenmap = {
       // Creating a SVG element will not make the SVG render
       // in all browsers. innerHTML will.
       var tmp = document.createElement("div");
-      tmp.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' class='thenmap'>" + svgString + "</svg>";
+      tmp.innerHTML = svgString;
       self.svg = tmp.getElementsByTagName('svg')[0];
-      self.svg.setAttribute("preserveAspectRatio", "xMidYMin meet");
-      self.svg.style.height = self.settings.h + "px";
-      self.svg.style.width = self.settings.w + "px";
-
-      self.el.appendChild(self.svg); //append SVG before setting viewBox, to get size
-      var bbox = self.svg.getBBox();
-      self.svg.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
+      //append SVG before setting viewBox, to get size
+      self.el.appendChild(self.svg);
+//      Do we need to explicitly set viewBox? This must be tested, not least on IE
+//      var bbox = self.svg.getBBox();
+//      self.svg.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 
 
       // Color the map if a spreadsheet key is given
@@ -109,16 +108,18 @@ var Thenmap = {
   },  // function init
 
   createApiUrl: function() {
+    var self = this;
     var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
     apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
+    // Add url parameters
     var options = [];
-    if (this.settings.projection !== null) {
-          options.push("projection=" + this.settings.projection);
-    }
-    if (this.settings.language !== null) {
-          options.push("language=" + this.settings.language);
-    }
+    ["width", "height", "projection", "language"].forEach(function(key){
+      if (self.settings[key] !== null){
+        options.push(key + "=" + self.settings[key]);
+      }
+    });
     apiUrl += "?" + options.join("&");
+    console.log(apiUrl);
     return apiUrl;
   },  // function createApiUrl
 
