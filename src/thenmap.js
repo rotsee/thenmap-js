@@ -100,7 +100,7 @@ var Thenmap = {
 
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
-//        self.ColorLayer.init(self.settings.dataKey);
+        self.ColorLayer.init(self.settings.dataKey);
       }
 
     });
@@ -119,7 +119,6 @@ var Thenmap = {
       }
     });
     apiUrl += "?" + options.join("&");
-    console.log(apiUrl);
     return apiUrl;
   },  // function createApiUrl
 
