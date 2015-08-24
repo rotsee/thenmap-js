@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         src: 'src/thenmap.js',
-        dest: 'build/thenmap-1.0.0.min.js'
+        dest: 'build/thenmap-<%= pkg.version %>.min.js'
       }
     }
   });
