@@ -1,0 +1,54 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<title>Municipalities where the social democrats got more than 50 percent of votes in 1973 elections</title>
+<meta name="author" content="Journalism++">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<style>
+  iframe {
+    width: 100%;
+    height: 350px;
+    border: 0;
+  }
+</style>
+
+</head>
+<body>
+<div class="container">
+  <h1>Municipalities where the social democrats got more than 50 percent of votes in 1973 elections</h1>
+  <div id="map" class="testkarta"></div>
+
+  <h3>Code</h3>
+  <pre id="code-out"></pre>
+
+  <h3>Data</h3>
+  <iframe id="data-frame"></iframe>
+
+</div>
+
+<script src="../build/thenmap-1.0.0.min.js"></script>
+<script id="code-in">
+var settings = {
+  dataKey: "1q7hDvNJPtiy3Xn9qKiSh81BCEpIaAgBfET70rt1mcJk",
+  dataset: "sweden",
+  date: "1973",
+  language: "sv",
+  defaultColor: "#333",
+}
+Thenmap.init("map", settings);
+</script>
+
+<script>
+/* DRY fix: Get the map init code and print it on page.
+*/
+var codeIn = document.getElementById("code-in");  
+var codeOut = document.getElementById("code-out");
+var iframe = document.getElementById("data-frame");
+
+codeOut.innerHTML = codeIn.innerHTML;
+
+var iframeSource = "https://docs.google.com/spreadsheets/d/" + settings.dataKey + "/pubhtml?widget=true&amp;headers=false";
+iframe.setAttribute("src", iframeSource);
+</script>
+
