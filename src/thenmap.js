@@ -52,26 +52,7 @@ var Thenmap = {
     document.getElementsByTagName("head")[0].appendChild(css);
     this.css = css;
 
-    // set default style for svg
-    this.ColorLayer.addCssRules([
-      {
-        selector: "svg.thenmap",
-        attribute: "fill",
-        value: this.defaultColor
-      },
-      {
-        selector: "svg.thenmap",
-        attribute: "stroke",
-        value: "white"
-      },
-      {
-        selector: "svg.thenmap",
-        attribute: "stroke-width",
-        value: ".25px"
-      }
-    ]);
-
-    // set default loading style
+    // set global styles
     @@include('styles.js');
 
     if (self.css.styleSheet) {
