@@ -19,6 +19,13 @@ var Thenmap = {
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
   },
 
+  /* Print debug message to the console
+  */
+  log: function(string) {
+    if (this.debug) {
+      console.log(string + "\nIn function:"+arguments.callee.caller.name);
+    }
+  },
   /* Entry point
   */
   init: function(elIdentifier, options) {
@@ -83,7 +90,9 @@ var Thenmap = {
 
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
-      var svgString = JSON.parse(response).svg;
+      var response_json = JSON.parse(response);
+      var svgString = response_json.svg;
+      var data = response_json.data;
 
       // Something of an hack, to make sure SVG is rendered
       // Creating a SVG element will not make the SVG render
@@ -97,6 +106,25 @@ var Thenmap = {
 //      var bbox = self.svg.getBBox();
 //      self.svg.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 
+      //Apply classes, add titles
+      var paths=self.el.getElementsByTagName('path');
+      var i = paths.length;
+      while(--i) {
+        //We must support IE10, so can not use dataset
+        var data_id = paths[i].getAttribute("data-id");
+        if (data_id in data){
+
+          var title = document.createElement('title');
+          title.innerHTML = data[data_id].name;
+          paths[i].appendChild(title);
+
+          //element.className is not available for SVG elements
+          paths[i].setAttribute("class", data[data_id].class);
+        } else {
+          self.log("no data for id in row" + i);
+        }
+
+      }
 
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
@@ -110,9 +138,9 @@ var Thenmap = {
   createApiUrl: function() {
     var self = this;
     var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
-    apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
+    apiUrl += [this.settings.dataset, "svg|data", this.settings.date].join("/");
     // Add url parameters
-    var options = [];
+    var options = ["data_props=name|class"];
     ["width", "height", "projection", "language"].forEach(function(key){
       if (self.settings[key] !== null){
         options.push(key + "=" + self.settings[key]);
