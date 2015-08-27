@@ -89,13 +89,12 @@ var Thenmap = {
         var data_id = paths[i].getAttribute("data-id");
         if (data_id in data){
 
-          var title = document.createElement('title');
-          title.innerHTML = data[data_id].name;
+          var title = document.createElementNS("http://www.w3.org/2000/svg","title")
+          title.textContent = data[data_id].name;
           paths[i].appendChild(title);
 
           //element.className is not available for SVG elements
           paths[i].setAttribute("class", data[data_id].class);
-          paths[i].setAttribute("data-tooltip", data[data_id].name);
 
         } else {
           self.log("no data for id in row" + i);
@@ -224,7 +223,6 @@ var Thenmap = {
       // Use the most common color as default, to reduce number of CSS rules
       var mostCommonColor = this.getMostCommonValue(data, "color");
       mostCommonColor = this.getColorCode(mostCommonColor);
-
       cssRules.push({
         selector: "svg.thenmap path",
         attribute: "fill",
