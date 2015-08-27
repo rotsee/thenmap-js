@@ -72,20 +72,14 @@ var Thenmap = {
     ]);
 
     // set default loading style
-    var loadingStyle = "@keyframes loading_data {" + 
-                       "  0%   {fill-opacity: .25}" +
-                       "  100% {fill-opacity: .75}" +
-                       "}" +
-                       ".loading_data path {" +
-                       "  animation: loading_data 1s linear infinite alternate;" +
-                       "}   ";
+    @@include('styles.js');
 
     if (self.css.styleSheet) {
         // IE
-        self.css.styleSheet.cssText += loadingStyle;
+        self.css.styleSheet.cssText += CSS["src/styles.css"];
     } else {
         // Other browsers
-        self.css.innerHTML += loadingStyle;
+        self.css.innerHTML += CSS["src/styles.css"];
     }
 
     var httpClient = self.HttpClient;
@@ -120,6 +114,8 @@ var Thenmap = {
 
           //element.className is not available for SVG elements
           paths[i].setAttribute("class", data[data_id].class);
+          paths[i].setAttribute("data-tooltip", data[data_id].name);
+
         } else {
           self.log("no data for id in row" + i);
         }
