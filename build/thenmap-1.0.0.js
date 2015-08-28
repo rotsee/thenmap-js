@@ -17,6 +17,7 @@ var Thenmap = {
     dataKey: null,
     dataset: "se-7",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
+    callback: null
   },
 
   /* Print debug message to the console
@@ -56,14 +57,7 @@ var Thenmap = {
     var CSS = CSS || {};
 CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .25px\n}\n@keyframes loading_data {\n    0%   {fill-opacity: .25}\n    100% {fill-opacity: .75}\n}\n.loading_data path {\n    animation: loading_data 1s linear infinite alternate;\n}';
 ;
-
-    if (self.css.styleSheet) {
-        // IE
-        self.css.styleSheet.cssText += CSS["src/styles.css"];
-    } else {
-        // Other browsers
-        self.css.innerHTML += CSS["src/styles.css"];
-    }
+    self.extendCss(CSS["src/styles.css"]);
 
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
@@ -99,7 +93,7 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
           paths[i].setAttribute("class", data[data_id].class);
 
         } else {
-          self.log("no data for id in row" + i);
+          self.log("no data for shape id" + data_id);
         }
 
       }
@@ -107,6 +101,10 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
         self.ColorLayer.init(self.settings.dataKey);
+      }
+
+      if (typeof self.settings.callback === "function"){
+        self.settings.callback(null, this);
       }
 
     });
@@ -127,6 +125,20 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
     apiUrl += "?" + options.join("&");
     return apiUrl;
   },  // function createApiUrl
+
+  /* Add code to the global stylesheet
+  */
+  extendCss: function(code) {
+
+    if (this.css.styleSheet) {
+        // IE
+        this.css.styleSheet.cssText += code;
+    } else {
+        // Other browsers
+        this.css.innerHTML += code;
+    }
+
+  },
 
   HttpClient: {
     get: function(url, callback) {
@@ -156,40 +168,6 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
       })
     }, // getSpreadsheetData
 
-    /*  Take an array of selectors, attributes and values, and add to style tag
-    */
-    addCssRules: function(rules) {
-      var css = this.thenmap.css;
-
-      var text = "";
-      var l = rules.length;
-      for (var i = 0; i < l; i++) {
-        var d = rules[i];
-        text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
-      }
-
-      if (css.styleSheet) {
-          // IE
-          css.styleSheet.cssText += text;
-      } else {
-          // Other browsers
-          css.innerHTML += text;
-      }
-
-    }, // addCssRules
-
-    /* Return the most commons value in object, for the given key
-    */
-    getMostCommonValue: function(data, key) {
-      var dataArray = [];
-      for(var d in data) {dataArray.push(data[d][key]);}
-      return dataArray.sort(function(a,b){
-        return dataArray.filter(function(v){ return v===a }).length
-             - dataArray.filter(function(v){ return v===b }).length;
-      }).pop();;
-
-    },
-
     /* Sanitize and validate a SVG color code
        Accepts "#99cccc", "9cc", "green", and "rgb(1,32,42)"
     */
@@ -208,7 +186,7 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
         return string.toLowerCase();
       } else if (/rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i.test(string)){
         // rgb(123,231,432)
-        return string;
+        return string.toLowerCase();
       } else {
         // *invalid
         return this.thenmap.defaultColor;
@@ -216,49 +194,54 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
 
     },
 
-    /* Colorizes map 
+    /* Colorize map 
     */
     render: function(data) {
       var self = this;
-      var cssRules = [];
+      var colors = {}
 
-      // Use the most common color as default, to reduce number of CSS rules
-      var mostCommonColor = this.getMostCommonValue(data, "color");
-      mostCommonColor = this.getColorCode(mostCommonColor);
-      cssRules.push({
-        selector: "svg.thenmap path",
-        attribute: "fill",
-        value: mostCommonColor
-      });
-
-      // Create a set of css rules based on data
-      for (var i = 0; i < data.length; i++) {
+      /* Create a colors object like this:
+        { green: [class1, class2], ... }
+      */
+      var i = data.length;
+      while(--i) {
         var d = data[i];
-        var colorCode = self.getColorCode(d.color);
-
-        if (colorCode !== mostCommonColor) {
-          cssRules.push({
-            selector: "svg.thenmap ." + d.id,
-            attribute: "fill",
-            value: colorCode
-          });
+        if (d.color) {
+          var colorCode = self.getColorCode(d.color);
+          var selector = "path." + d.id;
+          if (colorCode in colors){
+            colors[colorCode].push(selector);
+          } else {
+            colors[colorCode] = [selector];
+          }
         }
       }
 
-      // Render style tag
-      self.addCssRules(cssRules);
-    }, // render
+      /* build and apply CSS */
+      var cssCode = "";
+      for (var color in colors){
+        cssCode += colors[color].join(", ") + "{fill:" + color + "}\n";
+      }
+      self.thenmap.extendCss(cssCode);
+    }, // ColorLayer.render
 
+    /* Constructor for thenmap.ColorLayer
+    */
     init: function(spreadsheetKey) {
       var self = this;
+
+      // Add loader class while loading
       var oldClassName = self.thenmap.el.className || "";
       self.thenmap.el.className = [oldClassName, "loading_data"].join(" ");
       self.getSpreadsheetData(spreadsheetKey, function(data) {
+        // Remove loader class
         self.thenmap.el.className = oldClassName;
+        //Use data
         self.render(data);
       });
-    }
-  }, // end of ColorLayer
+    } // ColorLayer.init
+
+  }, // ColorLayer
 
   utils: {
     extend: function ( defaults, options ) {
