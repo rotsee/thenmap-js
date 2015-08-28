@@ -90,7 +90,7 @@ var Thenmap = {
           paths[i].setAttribute("class", data[data_id].class);
 
         } else {
-          self.log("no data for id in row" + i);
+          self.log("no data for shape id" + data_id);
         }
 
       }
