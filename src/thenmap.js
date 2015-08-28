@@ -202,7 +202,7 @@ var Thenmap = {
         { green: [class1, class2], ... }
       */
       var i = data.length;
-      while(--i) {
+      while(i--) {
         var d = data[i];
         if (d.color) {
           var colorCode = self.getColorCode(d.color);
