@@ -60,7 +60,6 @@ var Thenmap = {
     httpClient.get(self.createApiUrl(), function(response) {
       var response_json = JSON.parse(response);
       var svgString = response_json.svg;
-      console.log(svgString);
       var data = response_json.data;
 
       // Something of an hack, to make sure SVG is rendered
