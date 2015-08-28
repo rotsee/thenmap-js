@@ -17,6 +17,7 @@ var Thenmap = {
     dataKey: null,
     dataset: "se-7",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
+    callback: null
   },
 
   /* Print debug message to the console
@@ -98,6 +99,10 @@ var Thenmap = {
       // Color the map if a spreadsheet key is given
       if (self.settings.dataKey) {
         self.ColorLayer.init(self.settings.dataKey);
+      }
+
+      if (typeof self.settings.callback === "function"){
+        self.settings.callback(null, this);
       }
 
     });
