@@ -166,33 +166,6 @@ var Thenmap = {
       })
     }, // getSpreadsheetData
 
-    /*  Take an array of selectors, attributes and values, and add to style tag
-    */
-    addCssRules: function(rules) {
-
-      var text = "";
-      var l = rules.length;
-      for (var i = 0; i < l; i++) {
-        var d = rules[i];
-        text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
-      }
-
-      this.thenmap.extendCss(text);
-
-    }, // addCssRules
-
-    /* Return the most commons value in object, for the given key
-    */
-    getMostCommonValue: function(data, key) {
-      var dataArray = [];
-      for(var d in data) {dataArray.push(data[d][key]);}
-      return dataArray.sort(function(a,b){
-        return dataArray.filter(function(v){ return v===a }).length
-             - dataArray.filter(function(v){ return v===b }).length;
-      }).pop();;
-
-    },
-
     /* Sanitize and validate a SVG color code
        Accepts "#99cccc", "9cc", "green", and "rgb(1,32,42)"
     */
@@ -233,7 +206,7 @@ var Thenmap = {
         var d = data[i];
         if (d.color) {
           var colorCode = self.getColorCode(d.color);
-          var selector = "svg.thenmap ." + d.id;
+          var selector = "path." + d.id;
           if (colorCode in colors){
             colors[colorCode].push(selector);
           } else {
@@ -242,12 +215,11 @@ var Thenmap = {
         }
       }
 
+      /* build and apply CSS */
       var cssCode = "";
       for (var color in colors){
         cssCode += colors[color].join(", ") + "{fill:" + color + "}\n";
       }
-
-      console.log(cssCode);
       self.thenmap.extendCss(cssCode);
     }, // ColorLayer.render
 
