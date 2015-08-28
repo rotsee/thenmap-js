@@ -124,6 +124,8 @@ var Thenmap = {
     return apiUrl;
   },  // function createApiUrl
 
+  /* Add code to the global stylesheet
+  */
   extendCss: function(code) {
 
     if (this.css.styleSheet) {
@@ -209,7 +211,7 @@ var Thenmap = {
         return string.toLowerCase();
       } else if (/rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i.test(string)){
         // rgb(123,231,432)
-        return string;
+        return string.toLowerCase();
       } else {
         // *invalid
         return this.thenmap.defaultColor;
@@ -217,49 +219,55 @@ var Thenmap = {
 
     },
 
-    /* Colorizes map 
+    /* Colorize map 
     */
     render: function(data) {
       var self = this;
-      var cssRules = [];
+      var colors = {}
 
-      // Use the most common color as default, to reduce number of CSS rules
-      var mostCommonColor = this.getMostCommonValue(data, "color");
-      mostCommonColor = this.getColorCode(mostCommonColor);
-      cssRules.push({
-        selector: "svg.thenmap path",
-        attribute: "fill",
-        value: mostCommonColor
-      });
-
-      // Create a set of css rules based on data
-      for (var i = 0; i < data.length; i++) {
+      /* Create a colors object like this:
+        { green: [class1, class2], ... }
+      */
+      var i = data.length;
+      while(--i) {
         var d = data[i];
-        var colorCode = self.getColorCode(d.color);
-
-        if (colorCode !== mostCommonColor) {
-          cssRules.push({
-            selector: "svg.thenmap ." + d.id,
-            attribute: "fill",
-            value: colorCode
-          });
+        if (d.color) {
+          var colorCode = self.getColorCode(d.color);
+          var selector = "svg.thenmap ." + d.id;
+          if (colorCode in colors){
+            colors[colorCode].push(selector);
+          } else {
+            colors[colorCode] = [selector];
+          }
         }
       }
 
-      // Render style tag
-      self.addCssRules(cssRules);
-    }, // render
+      var cssCode = "";
+      for (var color in colors){
+        cssCode += colors[color].join(", ") + "{fill:" + color + "}\n";
+      }
 
+      console.log(cssCode);
+      self.thenmap.extendCss(cssCode);
+    }, // ColorLayer.render
+
+    /* Constructor for thenmap.ColorLayer
+    */
     init: function(spreadsheetKey) {
       var self = this;
+
+      // Add loader class while loading
       var oldClassName = self.thenmap.el.className || "";
       self.thenmap.el.className = [oldClassName, "loading_data"].join(" ");
       self.getSpreadsheetData(spreadsheetKey, function(data) {
+        // Remove loader class
         self.thenmap.el.className = oldClassName;
+        //Use data
         self.render(data);
       });
-    }
-  }, // end of ColorLayer
+    } // ColorLayer.init
+
+  }, // ColorLayer
 
   utils: {
     extend: function ( defaults, options ) {
