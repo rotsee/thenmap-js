@@ -30,9 +30,11 @@ Thenmap takes the following settings:
 - `language`  
 - `dataKey`  
 - `dataset`  
-- `date`  
+- `date`
+- `projection`
 - `defaultColor`
+- `callback`
 
-`dataKey` is the id of the Google spreadsheet. `defaultColor` the fill color given to shapes that haven't been assigned an explicit color. See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
+`dataKey` is the id of the Google spreadsheet. `defaultColor` the fill color given to shapes that haven't been assigned an explicit color. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
 
 See examples folder for examples.
