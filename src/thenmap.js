@@ -54,19 +54,13 @@ var Thenmap = {
 
     // set global styles
     @@include('styles.js');
-
-    if (self.css.styleSheet) {
-        // IE
-        self.css.styleSheet.cssText += CSS["src/styles.css"];
-    } else {
-        // Other browsers
-        self.css.innerHTML += CSS["src/styles.css"];
-    }
+    self.extendCss(CSS["src/styles.css"]);
 
     var httpClient = self.HttpClient;
     httpClient.get(self.createApiUrl(), function(response) {
       var response_json = JSON.parse(response);
       var svgString = response_json.svg;
+      console.log(svgString);
       var data = response_json.data;
 
       // Something of an hack, to make sure SVG is rendered
@@ -126,6 +120,18 @@ var Thenmap = {
     return apiUrl;
   },  // function createApiUrl
 
+  extendCss: function(code) {
+
+    if (this.css.styleSheet) {
+        // IE
+        this.css.styleSheet.cssText += code;
+    } else {
+        // Other browsers
+        this.css.innerHTML += code;
+    }
+
+  },
+
   HttpClient: {
     get: function(url, callback) {
       var httpRequest = new XMLHttpRequest();
@@ -157,7 +163,6 @@ var Thenmap = {
     /*  Take an array of selectors, attributes and values, and add to style tag
     */
     addCssRules: function(rules) {
-      var css = this.thenmap.css;
 
       var text = "";
       var l = rules.length;
@@ -166,13 +171,7 @@ var Thenmap = {
         text += d.selector + " { " + d.attribute + ": " + d.value+ "; }";
       }
 
-      if (css.styleSheet) {
-          // IE
-          css.styleSheet.cssText += text;
-      } else {
-          // Other browsers
-          css.innerHTML += text;
-      }
+      this.thenmap.extendCss(text);
 
     }, // addCssRules
 
