@@ -1,9 +1,10 @@
+Simple javascript library for accessing the [Thenmap](//www.thenmap.net) API. This script will fetch data for one date at a time. If you want to create sliders, [showing different dates in one visualization](//old.thenmap.net), we strongly recommend you to rather fetch _all_ borders in one request.
 
 ## Getting started
 
-Start by preparing your Google Spreadsheet with data. The spreadsheet should contain a list of the countries that you want to color. The country is defined in the `id` column and the fill color in the `color` column. Thenmap.js accepts CSS color synthax.
+Start by preparing your Google Spreadsheet with data. The spreadsheet should contain a list of the countries that you want to color. The country is defined in the `id` column and the fill color in the `color` column. Thenmap.js accepts any CSS color syntax (e.g. `#99cccc`, `purple` or `rgb(0, 231, 99)`)
 
-We follow standard ISO abbreviations for countries. Use these [sample datasets for reference](https://docs.google.com/spreadsheets/d/1dj8qw3I75qudflfkr4wBDipeehnecsSslemkn2j5qRE/edit#gid=0) to get correct shape ids. For older countries that seized to exist before the introduction of ISO we have "invented" own abbreviations.
+We use [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for modern nations and subdivisions, where available. Use these [sample datasets for reference](https://docs.google.com/spreadsheets/d/1dj8qw3I75qudflfkr4wBDipeehnecsSslemkn2j5qRE/edit#gid=0) to get correct shape ids.
 
 Publish the dataset by clicking __File > Publish to the web__ and __Start publishing__.
 
@@ -34,6 +35,6 @@ Thenmap takes the following settings:
 - `projection`
 - `callback`
 
-`dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
+`dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG. See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
 
 See examples folder for examples.
