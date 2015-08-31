@@ -38,3 +38,14 @@ Thenmap takes the following settings:
 `dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG. See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
 
 See examples folder for examples.
+
+## CDN
+The Javascript is hosted on Amazon. To include it from there:
+
+*HTTP:*
+
+    <script sec="http://cdn.thenmap.net/thenmap-1.0.0.min.js"></script>
+
+*HTTP/HTTPS:*
+
+    <script src="http://drvkoaf101245.cloudfront.net/thenmap-1.0.0.min.js"></script>
