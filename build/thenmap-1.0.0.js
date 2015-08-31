@@ -204,7 +204,7 @@ CSS["src/styles.css"] = 'svg.thenmap {\n    stroke: white;\n    stroke-width: .2
         { green: [class1, class2], ... }
       */
       var i = data.length;
-      while(--i) {
+      while(i--) {
         var d = data[i];
         if (d.color) {
           var colorCode = self.getColorCode(d.color);
