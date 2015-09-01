@@ -49,3 +49,11 @@ The Javascript is hosted on Amazon. To include it from there:
 **HTTP/HTTPS:**
 
     <script src="http://drvkoaf101245.cloudfront.net/thenmap-1.0.0.min.js"></script>
+
+##Changelog
+
+ * 1.0.1
+ ** Fix bug where a path would miss a title
+
+ * 1.0.0
+ ** First version
