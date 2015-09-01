@@ -78,7 +78,7 @@ var Thenmap = {
       //Apply classes, add titles
       var paths=self.el.getElementsByTagName('path');
       var i = paths.length;
-      while(--i) {
+      while(i--) {
         //We must support IE10, so can not use dataset
         var data_id = paths[i].getAttribute("data-id");
         if (data_id in data){
