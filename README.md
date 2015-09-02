@@ -53,7 +53,7 @@ The Javascript is hosted on Amazon. To include it from there:
 ##Changelog
 
  * 1.0.1
- ** Fix bug where a path would miss a title
+  * Fix bug where a path would miss a title
 
  * 1.0.0
- ** First version
+  * First version
