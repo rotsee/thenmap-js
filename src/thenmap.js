@@ -85,7 +85,7 @@ var Thenmap = {
         var data_id = paths[i].getAttribute("data-id");
         if (data_id in data){
 
-          var title = document.createElementNS("http://www.w3.org/2000/svg","title")
+          var title = document.createElementNS("http://www.w3.org/2000/svg","title");
           title.textContent = data[data_id].name;
           paths[i].appendChild(title);
 
@@ -148,14 +148,14 @@ var Thenmap = {
   HttpClient: {
     get: function(url, callback) {
       var httpRequest = new XMLHttpRequest();
-      httpRequest.onreadystatechange = function() { 
+      httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState == 4 && httpRequest.status == 200) {
           callback(httpRequest.responseText);
         }
       }
 
-      httpRequest.open( "GET", url, true );            
-      httpRequest.send( null );
+      httpRequest.open("GET", url, true);
+      httpRequest.send(null);
     }
   },  // HttpClient
 
