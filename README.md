@@ -55,6 +55,7 @@ The Javascript is hosted on Amazon. To include it from there:
  * 1.0.2
   * Replace depracated API parameter names
   * Resize container element on start
+  * Hover effect
   * Minor code fixes
 
  * 1.0.1

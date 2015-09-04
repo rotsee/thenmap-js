@@ -1,11 +1,19 @@
 svg.thenmap {
-    stroke: white;
-    stroke-width: .25px
+  stroke: white;
+  stroke-width: .25px
 }
 @keyframes loading_data {
-    0%   {fill-opacity: .25}
-    100% {fill-opacity: .75}
+  0% {fill-opacity: .25}
+  100% {fill-opacity: .75}
 }
 .loading_data path {
-    animation: loading_data 1s linear infinite alternate;
+  animation: loading_data 1s linear infinite alternate;
+}
+
+svg.thenmap path:hover {
+  -webkit-filter: sepia(50%);
+  -moz-filter: sepia(50%);
+  -ms-filter: sepia(50%);
+  -o-filter: sepia(50%);
+  filter: sepia(50%);
 }
