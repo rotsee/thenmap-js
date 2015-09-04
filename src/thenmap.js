@@ -115,7 +115,7 @@ var Thenmap = {
     apiUrl += [this.settings.dataset, "svg|data", this.settings.date].join("/");
     // Add url parameters
     var options = ["data_props=name|class"];
-    ["width", "height", "projection", "language"].forEach(function(key){
+    ["svg_width", "svg_height", "svg_projection", "data_lang"].forEach(function(key){
       if (self.settings[key] !== null){
         options.push(key + "=" + self.settings[key]);
       }
