@@ -52,6 +52,9 @@ The Javascript is hosted on Amazon. To include it from there:
 
 ##Changelog
 
+ * 1.0.2
+  * Replace depracated API parameter names
+
  * 1.0.1
   * Fix bug where a path would miss a title
 
