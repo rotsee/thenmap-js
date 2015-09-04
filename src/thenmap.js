@@ -47,6 +47,8 @@ var Thenmap = {
     } else {
       // not a valid identifier
     }
+    self.el.style.width = self.settings.width + "px"
+    self.el.style.height = self.settings.height + "px"
 
     // create CSS element for dynamic styling
     var css = document.createElement("style");
@@ -115,11 +117,16 @@ var Thenmap = {
     apiUrl += [this.settings.dataset, "svg|data", this.settings.date].join("/");
     // Add url parameters
     var options = ["data_props=name|class"];
-    ["svg_width", "svg_height", "svg_projection", "data_lang"].forEach(function(key){
+    var paramDict = {width: "svg_width",
+                     height: "svg_height",
+                     projection: "svg_proj",
+                     language: "data_lang"};
+    for (var key in paramDict) {
+      var attr = paramDict[key];
       if (self.settings[key] !== null){
-        options.push(key + "=" + self.settings[key]);
+        options.push(attr + "=" + self.settings[key]);
       }
-    });
+    }
     apiUrl += "?" + options.join("&");
     return apiUrl;
   },  // function createApiUrl
