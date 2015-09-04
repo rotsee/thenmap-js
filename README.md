@@ -54,7 +54,8 @@ The Javascript is hosted on Amazon. To include it from there:
 
  * 1.0.2
   * Replace depracated API parameter names
-  * Resize container on start
+  * Resize container element on start
+  * Minor code fixes
 
  * 1.0.1
   * Fix bug where a path would miss a title
