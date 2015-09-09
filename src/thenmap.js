@@ -84,13 +84,13 @@ var Thenmap = {
         //We must support IE10, so can not use dataset
         var data_id = paths[i].getAttribute("data-id");
         if (data_id in data){
-
+          var entity = data[data_id][0]; //Will only be one, as we have chosen a specific date
           var title = document.createElementNS("http://www.w3.org/2000/svg","title");
-          title.textContent = data[data_id].name;
+          title.textContent = entity.name;
           paths[i].appendChild(title);
 
           //element.className is not available for SVG elements
-          paths[i].setAttribute("class", data[data_id].class);
+          paths[i].setAttribute("class", entity.class);
 
         } else {
           self.log("no data for shape id" + data_id);
