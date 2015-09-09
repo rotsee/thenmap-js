@@ -44,15 +44,16 @@ The Javascript is hosted on Amazon. To include it from there:
 
 **HTTP:**
 
-    <script src="http://cdn.thenmap.net/thenmap-1.0.2.min.js"></script>
+    <script src="http://cdn.thenmap.net/thenmap-1.0.3.min.js"></script>
 
 **HTTP/HTTPS:**
 
-    <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.2.min.js"></script>
+    <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.3.min.js"></script>
 
 ##Changelog
 
  * 1.0.3
+  * The data module of the API had a _major_ flaw. That is now fixed, but at the cost of breaking backwards compability.
 
  * 1.0.2
   * Replace depracated API parameter names
