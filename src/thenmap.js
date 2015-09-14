@@ -71,11 +71,19 @@ var Thenmap = {
       var tmp = document.createElement("div");
       tmp.innerHTML = svgString;
       self.svg = tmp.getElementsByTagName('svg')[0];
-      //append SVG before setting viewBox, to get size
+
+      //Add filter for hover effect
+      var defsEl = self.svg.getElementsByTagName('defs')[0];
+      var svgNS = "http://www.w3.org/2000/svg";  
+      var filterEl = document.createElementNS(svgNS, "filter");
+      filterEl.id = "sepia"; 
+      filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.30 0.30 0.30 0 0
+        0.25 0.25 0.25 0 0
+        0.20 0.20 0.20 0 0
+        0.00 0.00 0.00 1 0'/>";
+      defsEl.appendChild(filterEl);
+
       self.el.appendChild(self.svg);
-//      Do we need to explicitly set viewBox? This must be tested, not least on IE
-//      var bbox = self.svg.getBBox();
-//      self.svg.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 
       //Apply classes, add titles
       var paths=self.el.getElementsByTagName('path');

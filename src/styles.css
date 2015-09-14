@@ -11,6 +11,7 @@ svg.thenmap {
 }
 
 svg.thenmap path:hover {
+  filter: url("#sepia"); /*Chrome*/
   -webkit-filter: sepia(50%);
   -moz-filter: sepia(50%);
   -ms-filter: sepia(50%);
