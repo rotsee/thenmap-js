@@ -72,15 +72,15 @@ var Thenmap = {
       tmp.innerHTML = svgString;
       self.svg = tmp.getElementsByTagName('svg')[0];
 
-      //Add filter for hover effect
+      //Add filter for hover effect in Chrome
       var defsEl = self.svg.getElementsByTagName('defs')[0];
       var svgNS = "http://www.w3.org/2000/svg";  
       var filterEl = document.createElementNS(svgNS, "filter");
       filterEl.id = "sepia"; 
-      filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.30 0.30 0.30 0 0
+      filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.35 0.35 0.35 0 0
         0.25 0.25 0.25 0 0
-        0.20 0.20 0.20 0 0
-        0.00 0.00 0.00 1 0'/>";
+        0.15 0.15 0.15 0 0
+        0.50 0.50 0.50 1 0'/>";
       defsEl.appendChild(filterEl);
 
       self.el.appendChild(self.svg);
@@ -93,7 +93,7 @@ var Thenmap = {
         var data_id = paths[i].getAttribute("data-id");
         if (data_id in data){
           var entity = data[data_id][0]; //Will only be one, as we have chosen a specific date
-          var title = document.createElementNS("http://www.w3.org/2000/svg","title");
+          var title = document.createElementNS(svgNS,"title");
           title.textContent = entity.name;
           paths[i].appendChild(title);
 
