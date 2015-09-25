@@ -89,20 +89,13 @@ var Thenmap = {
       var paths=self.el.getElementsByTagName('path');
       var i = paths.length;
       while(i--) {
-        //We must support IE10, so can not use dataset
-        var data_id = paths[i].getAttribute("data-id");
-        if (data_id in data){
-          var entity = data[data_id][0]; //Will only be one, as we have chosen a specific date
-          var title = document.createElementNS(svgNS,"title");
-          title.textContent = entity.name;
-          paths[i].appendChild(title);
+        //There will only be one entity for each shape
+        var title = document.createElementNS(svgNS,"title");
+        title.textContent = paths[i].getAttribute("data-name_1");
+        paths[i].appendChild(title);
 
-          //element.className is not available for SVG elements
-          paths[i].setAttribute("class", entity.class);
-
-        } else {
-          self.log("no data for shape id" + data_id);
-        }
+        //element.className is not available for SVG elements
+        paths[i].setAttribute("class", paths[i].getAttribute("data-class_1"));
 
       }
 
@@ -122,13 +115,13 @@ var Thenmap = {
   createApiUrl: function() {
     var self = this;
     var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
-    apiUrl += [this.settings.dataset, "svg|data", this.settings.date].join("/");
+    apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
     // Add url parameters
-    var options = ["data_props=name|class"];
+    var options = ["svg_props=name|class"];
     var paramDict = {width: "svg_width",
                      height: "svg_height",
                      projection: "svg_proj",
-                     language: "data_lang"};
+                     language: "svg_lang"};
     for (var key in paramDict) {
       var attr = paramDict[key];
       if (self.settings[key] !== null){
