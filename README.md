@@ -52,6 +52,7 @@ The Javascript is hosted on Amazon. To include it from there:
 
 ##Changelog
  * 1.0.4
+  * Use only one API module, making both back- and frontend a bit faster 
   * Make hover effect work in Chrome 
 
  * 1.0.3
