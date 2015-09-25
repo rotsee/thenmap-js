@@ -63,7 +63,6 @@ var Thenmap = {
     httpClient.get(self.createApiUrl(), function(response) {
       var response_json = JSON.parse(response);
       var svgString = response_json.svg;
-      var data = response_json.data;
 
       // Something of an hack, to make sure SVG is rendered
       // Creating a SVG element will not make the SVG render
@@ -96,7 +95,6 @@ var Thenmap = {
 
         //element.className is not available for SVG elements
         paths[i].setAttribute("class", paths[i].getAttribute("data-class_1"));
-
       }
 
       // Color the map if a spreadsheet key is given
