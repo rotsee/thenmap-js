@@ -27,7 +27,7 @@
 
 </div>
 
-<script src="../build/thenmap-1.0.3.min.js"></script>
+<script src="../build/thenmap-1.0.4.min.js"></script>
 <script id="code-in">
 var settings = {
   dataKey: "1q7hDvNJPtiy3Xn9qKiSh81BCEpIaAgBfET70rt1mcJk",
@@ -35,6 +35,9 @@ var settings = {
   date: "1973",
   language: "sv",
   projection: "sweref99tm",
+}
+if (window.location.protocol === "file:"){
+  Thenmap.debug = true;
 }
 Thenmap.init("map", settings);
 </script>
