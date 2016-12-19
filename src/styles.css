@@ -1,6 +1,6 @@
 svg.thenmap {
   stroke: white;
-  stroke-width: .25px
+  stroke-width: .5px
 }
 @keyframes loading_data {
   0% {fill-opacity: .25}
