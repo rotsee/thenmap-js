@@ -2,7 +2,7 @@ Simple javascript library for accessing the [Thenmap](//www.thenmap.net) API. Th
 
 ## Getting started
 
-Start by preparing your Google Spreadsheet with data. The spreadsheet should contain a list of the countries that you want to color. The country is defined in the `id` column and the fill color in the `color` column. Thenmap.js accepts any CSS color syntax (e.g. `#99cccc`, `purple` or `rgb(0, 231, 99)`)
+Start by preparing your Google Spreadsheet with data. The spreadsheet should contain a list of the entities that you want to color. The country is entity in the `id` column and the fill color in the `color` column. Thenmap.js accepts any CSS color syntax (e.g. `#99cccc`, `purple` or `rgb(0, 231, 99)`)
 
 We use [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for modern nations and subdivisions, where available. Use these [sample datasets for reference](https://docs.google.com/spreadsheets/d/1dj8qw3I75qudflfkr4wBDipeehnecsSslemkn2j5qRE/edit#gid=0) to get correct shape ids.
 
@@ -37,7 +37,7 @@ Thenmap takes the following settings:
 
 `dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG. See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
 
-See examples folder for examples.
+See the examples folder and [the demo page](http://www.thenmap.net/demo) for examples.
 
 ## CDN
 The Javascript is hosted on Amazon. To include it from there:
