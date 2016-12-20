@@ -44,14 +44,16 @@ The Javascript is hosted on Amazon. To include it from there:
 
 **HTTP:**
 
-    <script src="http://cdn.thenmap.net/thenmap-1.0.4.min.js"></script>
+    <script src="http://cdn.thenmap.net/thenmap-1.0.5.min.js"></script>
 
 **HTTP/HTTPS:**
 
-    <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.4.min.js"></script>
+    <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.5.min.js"></script>
 
 ##Changelog
  * 1.0.5
+  * Styling fixes
+  * Really make hover effect work in Chrome 
 
  * 1.0.4
   * Use only one API module, making both back- and frontend a bit faster 
