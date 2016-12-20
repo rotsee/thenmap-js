@@ -35,8 +35,10 @@ var settings = {
   date: "1949",
   language: "en",
   defaultColor: "#333",
-  width:800
+  width:800,
+  debug: true
 }
+if (location.protocol == 'file:'){Thenmap.debug = true}//DEBUG
 Thenmap.init("map", settings);
 </script>
 
@@ -47,7 +49,7 @@ var codeIn = document.getElementById("code-in");
 var codeOut = document.getElementById("code-out");
 var iframe = document.getElementById("data-frame");
 
-codeOut.innerHTML = codeIn.innerHTML;
+codeOut.innerHTML = codeIn.innerHTML.replace(/.*DEBUG/gi, "");
 
 var iframeSource = "https://docs.google.com/spreadsheets/d/" + settings.dataKey + "/pubhtml?widget=true&amp;headers=false";
 iframe.setAttribute("src", iframeSource);
