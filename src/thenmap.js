@@ -76,9 +76,9 @@ var Thenmap = {
       var svgNS = "http://www.w3.org/2000/svg";  
       var filterEl = document.createElementNS(svgNS, "filter");
       filterEl.id = "sepia"; 
-      filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.35 0.35 0.35 0 0
-        0.25 0.25 0.25 0 0
-        0.15 0.15 0.15 0 0
+      filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.35 0.35 0.35 0 0 \
+        0.25 0.25 0.25 0 0 \
+        0.15 0.15 0.15 0 0 \
         0.50 0.50 0.50 1 0'/>";
       defsEl.appendChild(filterEl);
 
