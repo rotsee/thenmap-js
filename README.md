@@ -39,11 +39,23 @@ Thenmap takes the following settings:
 
 See the examples folder and [the demo page](http://www.thenmap.net/demo) for examples.
 
-## CDN and download
+## CDN, download and building
 
 The Javascript is hosted on Amazon. To include it from there:
 
     <script src="https://drvkoaf101245.cloudfront.net/thenmap-1.0.6.min.js"></script>
+
+...or you can simply [download it from there](https://drvkoaf101245.cloudfront.net/thenmap-1.0.6.min.js).
+
+To clone this repo and build the script yourself:
+
+    npm install -g grunt-cli
+    git clone https://github.com/rotsee/thenmap-js.git
+    cd thenmap-js
+    npm install
+    grunt
+
+The latest thenmap-x.x.x.min.js file is now in the `build` folder.
 
 ## License
 This code includes Tabletop.js, copyright (c) 2012-2013 Jonathan Soma, and released under MIT license.
