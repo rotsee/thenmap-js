@@ -39,11 +39,18 @@ Thenmap takes the following settings:
 
 See the examples folder and [the demo page](http://www.thenmap.net/demo) for examples.
 
-## CDN
+## CDN and download
 
 The Javascript is hosted on Amazon. To include it from there:
 
     <script src="https://drvkoaf101245.cloudfront.net/thenmap-1.0.6.min.js"></script>
+
+## License
+This code includes Tabletop.js, copyright (c) 2012-2013 Jonathan Soma, and released under MIT license.
+
+Everything else is copyright 2018 J++ Stockholm, and [released under MIT license](/LICENSE).
+
+In short: Feel free to use the code as you want.
 
 ## Changelog
 
