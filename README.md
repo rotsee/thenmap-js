@@ -26,7 +26,7 @@ Get the id of the Google spreadsheet from the url and add Thenmap.js to you webs
 
 Thenmap takes the following settings:
 
-- `width` 
+- `width`
 - `height`  
 - `language`  
 - `dataKey`  
@@ -51,13 +51,16 @@ The Javascript is hosted on Amazon. To include it from there:
     <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.5.min.js"></script>
 
 ##Changelog
+ * 1.0.6
+  * Remove parts of the debug mode that were ironically buggy. 
+
  * 1.0.5
   * Styling fixes
-  * Really make hover effect work in Chrome 
+  * Really make hover effect work in Chrome
 
  * 1.0.4
-  * Use only one API module, making both back- and frontend a bit faster 
-  * Make hover effect work in Chrome 
+  * Use only one API module, making both back- and frontend a bit faster
+  * Make hover effect work in Chrome
 
  * 1.0.3
   * The data module of the API had a _major_ flaw. That is now fixed, but at the cost of breaking backwards compability.
