@@ -40,39 +40,35 @@ Thenmap takes the following settings:
 See the examples folder and [the demo page](http://www.thenmap.net/demo) for examples.
 
 ## CDN
+
 The Javascript is hosted on Amazon. To include it from there:
 
-**HTTP:**
-
-    <script src="http://cdn.thenmap.net/thenmap-1.0.5.min.js"></script>
-
-**HTTP/HTTPS:**
-
-    <script src="//drvkoaf101245.cloudfront.net/thenmap-1.0.5.min.js"></script>
+    <script src="https://drvkoaf101245.cloudfront.net/thenmap-1.0.6.min.js"></script>
 
 ##Changelog
+
  * 1.0.6
-  * Remove parts of the debug mode that were ironically buggy. 
+ ** Remove parts of the debug mode that were ironically buggy.
 
  * 1.0.5
-  * Styling fixes
-  * Really make hover effect work in Chrome
+ ** Styling fixes
+ ** Really make hover effect work in Chrome
 
  * 1.0.4
-  * Use only one API module, making both back- and frontend a bit faster
-  * Make hover effect work in Chrome
+ ** Use only one API module, making both back- and frontend a bit faster
+ ** Make hover effect work in Chrome
 
  * 1.0.3
-  * The data module of the API had a _major_ flaw. That is now fixed, but at the cost of breaking backwards compability.
+ ** The data module of the API had a _major_ flaw. That is now fixed, but at the cost of breaking backwards compability.
 
  * 1.0.2
-  * Replace depracated API parameter names
-  * Resize container element on start
-  * Hover effect
-  * Minor code fixes
+ ** Replace depracated API parameter names
+ ** Resize container element on start
+ ** Hover effect
+ ** Minor code fixes
 
  * 1.0.1
-  * Fix bug where a path would miss a title
+ ** Fix bug where a path would miss a title
 
  * 1.0.0
-  * First version
+ ** First version
