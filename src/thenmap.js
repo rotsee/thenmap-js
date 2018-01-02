@@ -73,9 +73,9 @@ var Thenmap = {
 
       //Add filter for hover effect in Chrome
       var defsEl = self.svg.getElementsByTagName('defs')[0];
-      var svgNS = "http://www.w3.org/2000/svg";  
+      var svgNS = "http://www.w3.org/2000/svg";
       var filterEl = document.createElementNS(svgNS, "filter");
-      filterEl.id = "sepia"; 
+      filterEl.id = "sepia";
       filterEl.innerHTML = "<feColorMatrix type='matrix' values='0.35 0.35 0.35 0 0 \
         0.25 0.25 0.25 0 0 \
         0.15 0.15 0.15 0 0 \
@@ -112,7 +112,7 @@ var Thenmap = {
 
   createApiUrl: function() {
     var self = this;
-    var apiUrl = this.debug ? this.localApiUrl : this.apiUrl;
+    var apiUrl = this.settings.debug ? this.localApiUrl : this.apiUrl;
     apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
     // Add url parameters
     var options = ["svg_props=name|class"];
@@ -198,7 +198,7 @@ var Thenmap = {
 
     },
 
-    /* Colorize map 
+    /* Colorize map
     */
     render: function(data) {
       var self = this;
