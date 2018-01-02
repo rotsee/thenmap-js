@@ -66,6 +66,10 @@ In short: Feel free to use the code as you want.
 
 ## Changelog
 
+ * 2.0.0
+
+      * 
+
  * 1.0.6
 
       * Remove parts of the debug mode that were ironically buggy.
