@@ -1,4 +1,4 @@
-Simple javascript library for accessing the [Thenmap](//www.thenmap.net) API. This script will fetch data for one date at a time. If you want to create sliders, [showing different dates in one visualization](//old.thenmap.net), we strongly recommend you to rather fetch _all_ borders in one request.
+Simple Javascript library for accessing the [Thenmap](http://www.thenmap.net) API. This script will fetch data for one date at a time. If you want to create sliders, [showing different dates in one visualization](http://old.thenmap.net), we strongly recommend you to rather fetch _all_ borders in one request.
 
 ## Getting started
 
@@ -68,7 +68,7 @@ In short: Feel free to use the code as you want.
 
  * 2.0.0
 
-      * 
+      * Use v2 of the Thenmap API. Some maps may look different, see [this blog post on what's new](http://jplusplus.org/en/blog/version-two-of-the-thenmap-api/).
 
  * 1.0.6
 
