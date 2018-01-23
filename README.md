@@ -17,7 +17,7 @@ Get the id of the Google spreadsheet from the url and add Thenmap.js to you webs
     <script>
     var settings = {
       dataKey: "0AmYzu_s7QHsmdDNZUzRlYldnWTZCLXdrMXlYQzVxSFE",
-      dataset: "world",
+      dataset: "world-2",
       date: "1949"
     }
     Thenmap.init("map", settings);
@@ -35,7 +35,11 @@ Thenmap takes the following settings:
 - `projection`
 - `callback`
 
-`dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG. See [the API documentation](http://thenmap-api.herokuapp.com/#datasets) for description of the other settings.
+`dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG.
+
+`dataset` is one of the id's listed at [thenmap-api.herokuapp.com/doc/v2](http://thenmap-api.herokuapp.com/doc/v2/#datasets), e.g. `se-7` for Swedish municipalities. The default is `world-2`, nations of the world.
+
+See [the API documentation](http://thenmap-api.herokuapp.com/doc/v2/) for more details on the settings.
 
 See the examples folder and [the demo page](http://www.thenmap.net/demo) for examples.
 
