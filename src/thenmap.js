@@ -39,6 +39,7 @@ var Thenmap = {
       self.el = elIdentifier;
     } else {
       // not a valid identifier
+      self.log(elIdentifier + " is not a valid id name or DOM node.")
     }
     self.el.style.width = self.settings.width + "px"
     self.el.style.height = self.settings.height + "px"
@@ -241,6 +242,7 @@ var Thenmap = {
   }, // ColorLayer
 
   utils: {
+    /* Object.assign() replacement, more or less */
     extend: function ( defaults, options ) {
       var extended = {};
       var prop;
@@ -256,6 +258,13 @@ var Thenmap = {
       }
       return extended;
     } // Extend js object
-  }// Utils
+  },// Utils
 
+  /* Print debug message to the console
+  */
+  log: function(string) {
+    if (this.debug) {
+      console.log(string + "\nIn function:"+arguments.callee.caller.name);
+    }
+  }
 };
