@@ -2,7 +2,6 @@ var Thenmap = {
 
   debug: false,
   apiUrl: "//thenmap-api.herokuapp.com/v2/",
-  localApiUrl: "http://localhost:3000/v2/", //for debugging
   el: null, //container element
   svg: null, //svg element
   css: null, //css element for dynamically adding styles
@@ -26,6 +25,9 @@ var Thenmap = {
     var self = this;
     self.ColorLayer.thenmap = self;
 
+    // Clean up some values
+    options.width = options.width ? parseInt(options.width) : null;
+    options.height = options.height ? parseInt(options.height) : null;
     // Apply settings
     self.settings = self.utils.extend(self.settings, options);
 
@@ -41,8 +43,12 @@ var Thenmap = {
       // not a valid identifier
       self.log(elIdentifier + " is not a valid id name or DOM node.")
     }
-    self.el.style.width = self.settings.width + "px"
-    self.el.style.height = self.settings.height + "px"
+    if (self.settings.width){
+      self.el.style.width = self.settings.width + "px"
+    }
+    if (self.settings.height){
+      self.el.style.height = self.settings.height + "px"
+    }
 
     // create CSS element for dynamic styling
     var css = document.createElement("style");
@@ -54,9 +60,7 @@ var Thenmap = {
     self.extendCss(CSS["src/styles.css"]);
 
     var httpClient = self.HttpClient;
-    httpClient.get(self.createApiUrl(), function(response) {
-      var response_json = JSON.parse(response);
-      var svgString = response_json.svg;
+    httpClient.get(self.createApiUrl(), function(svgString) {
 
       // Something of an hack, to make sure SVG is rendered
       // Creating a SVG element will not make the SVG render
@@ -84,11 +88,11 @@ var Thenmap = {
       while(i--) {
         //There will only be one entity for each shape
         var title = document.createElementNS(svgNS,"title");
-        title.textContent = paths[i].getAttribute("data-name_1");
+        title.textContent = paths[i].getAttribute("thenmap:name");
         paths[i].appendChild(title);
 
         //element.className is not available for SVG elements
-        paths[i].setAttribute("class", paths[i].getAttribute("data-class_1"));
+        paths[i].setAttribute("class", paths[i].getAttribute("thenmap:class"));
       }
 
       // Color the map if a spreadsheet key is given
@@ -106,14 +110,14 @@ var Thenmap = {
 
   createApiUrl: function() {
     var self = this;
-    var apiUrl = this.settings.debug ? this.localApiUrl : this.apiUrl;
+    var apiUrl = this.apiUrl;
     apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
     // Add url parameters
     var options = ["svg_props=name|class"];
     var paramDict = {width: "svg_width",
                      height: "svg_height",
                      projection: "svg_proj",
-                     language: "svg_lang"};
+                     language: "language"};
     for (var key in paramDict) {
       var attr = paramDict[key];
       if (self.settings[key] !== null){
