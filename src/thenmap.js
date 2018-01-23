@@ -1,12 +1,12 @@
 var Thenmap = {
 
   debug: false,
-  apiUrl: "//thenmap-api.herokuapp.com/v1/",
-  localApiUrl: "http://localhost:3000/v1/", //for debugging
+  apiUrl: "//thenmap-api.herokuapp.com/v2/",
+  localApiUrl: "http://localhost:3000/v2/", //for debugging
   el: null, //container element
   svg: null, //svg element
   css: null, //css element for dynamically adding styles
-  defaultColor: "gainsboro",
+  defaultColor: "#e2e2e2",
 
   // Default settings that can be overridden by passing arguments to Thenmap
   settings: {
@@ -15,7 +15,7 @@ var Thenmap = {
     language: null,
     projection: null,
     dataKey: null,
-    dataset: "se-7",
+    dataset: "world-2",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
     callback: null
   },
