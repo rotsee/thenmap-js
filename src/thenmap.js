@@ -163,9 +163,7 @@ var Thenmap = {
     getSpreadsheetData: function(spreadsheetKey, callback) {
       Tabletop.init({
         key: spreadsheetKey,
-        callback: function(data, tabletop) {
-          callback(data);
-        },
+        callback: callback,
         simpleSheet: true
       })
     }, // getSpreadsheetData
