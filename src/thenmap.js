@@ -20,13 +20,6 @@ var Thenmap = {
     callback: null
   },
 
-  /* Print debug message to the console
-  */
-  log: function(string) {
-    if (this.debug) {
-      console.log(string + "\nIn function:"+arguments.callee.caller.name);
-    }
-  },
   /* Entry point
   */
   init: function(elIdentifier, options) {
