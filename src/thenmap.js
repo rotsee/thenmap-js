@@ -104,7 +104,8 @@ var Thenmap = {
 
       // Color the map if data or a spreadsheet key is given
       if (self.settings.data){
-        self.render(self.settings.data);
+        // FIXME: Refactor this, currently hacking into a class meant for Google Sheets rendering
+        self.ColorLayer.render(self.settings.data);
       } else if (self.settings.dataKey) {
         self.ColorLayer.init(self.settings.dataKey);
       }
