@@ -36,7 +36,7 @@ Thenmap takes the following settings:
   <dt>`dataKey`
   <dd>The id of the Google spreadsheet containing area classes and colors
   <dt>`data`
-  <dd>A key-value object with area classes and colors (dataKey will be ignored)
+  <dd>An array of with area classes and colors (dataKey will be ignored). To color all French and Portuguese colonies: `[{color: "#492A85", id: "fr-"}, {color: "#238AC2", id: "pt-"}]`
   <dt>`map`
   <dd>One of the id's listed at [thenmap-api.herokuapp.com/doc/v2](http://thenmap-api.herokuapp.com/doc/v2/#datasets), e.g. `se-7` for Swedish municipalities. The default is `world-2`, nations of the world. Previously known as `dataset`
   <dt>`date`
