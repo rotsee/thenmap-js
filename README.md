@@ -26,18 +26,24 @@ Get the id of the Google spreadsheet from the url and add Thenmap.js to you webs
 
 Thenmap takes the following settings:
 
-- `width`
-- `height`  
-- `language`  
-- `dataKey`  
-- `dataset`  
-- `date`
-- `projection`
-- `callback`
-
-`dataKey` is the id of the Google spreadsheet. `callback` is a function that will be called when the map is fully rendered (but not necessarily colored yet). `width` and `height` will determine the size and viewbox of the SVG.
-
-`dataset` is one of the id's listed at [thenmap-api.herokuapp.com/doc/v2](http://thenmap-api.herokuapp.com/doc/v2/#datasets), e.g. `se-7` for Swedish municipalities. The default is `world-2`, nations of the world.
+<dl>
+  <dt>`width`
+  <dd>Will determine the size and viewbox of the SVG
+  <dt>`height`
+  <dd>Will determine the size and viewbox of the SVG
+  <dt>`language`
+  <dd>Language used for names of geographic areas
+  <dt>`dataKey`
+  <dd>The id of the Google spreadsheet containing area classes and colors
+  <dt>`data`
+  <dd>A key-value object with area classes and colors (dataKey will be ignored)
+  <dt>`map`
+  <dd>One of the id's listed at [thenmap-api.herokuapp.com/doc/v2](http://thenmap-api.herokuapp.com/doc/v2/#datasets), e.g. `se-7` for Swedish municipalities. The default is `world-2`, nations of the world. Previously known as `dataset`
+  <dt>`date`
+  `projection`
+  <dt>`callback`
+  <dd>A function that will be called when the map is fully rendered (but not necessarily colored yet).
+</dl>
 
 See [the API documentation](http://thenmap-api.herokuapp.com/doc/v2/) for more details on the settings.
 
@@ -69,6 +75,11 @@ Everything else is copyright 2018 J++ Stockholm, and [released under MIT license
 In short: Feel free to use the code as you want.
 
 ## Changelog
+
+ * 2.1.0
+      * Upgrade Tabletop.js to `1.5.4`
+      * Add data option to pass coloring data directly
+      * Rename <s>`dataset`</s> to `map`, add deprecation notice-
 
  * 2.0.0
 

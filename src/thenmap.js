@@ -14,7 +14,7 @@ var Thenmap = {
     language: null,
     projection: null,
     dataKey: null,
-    dataset: "world-2",
+    map: "world-2",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
     callback: null
   },
@@ -28,6 +28,12 @@ var Thenmap = {
     // Clean up some values
     options.width = options.width ? parseInt(options.width) : null;
     options.height = options.height ? parseInt(options.height) : null;
+    /* Backwards compatibility with old parameter name*/
+    if ("dataset" in options){
+      console.log("Warning, the “dataset” parameter has been renamed “map”. Using “dataset” will stop working in future versions.")
+      options["map"] = options["dataset"];
+    }
+
     // Apply settings
     self.settings = self.utils.extend(self.settings, options);
 
@@ -111,7 +117,7 @@ var Thenmap = {
   createApiUrl: function() {
     var self = this;
     var apiUrl = this.apiUrl;
-    apiUrl += [this.settings.dataset, "svg", this.settings.date].join("/");
+    apiUrl += [this.settings.map, "svg", this.settings.date].join("/");
     // Add url parameters
     var options = ["svg_props=name|class"];
     var paramDict = {width: "svg_width",
