@@ -13,6 +13,7 @@ var Thenmap = {
     height: null,
     language: null,
     projection: null,
+    data: null,
     dataKey: null,
     map: "world-2",
     date: new Date().toISOString(), //current date, works in any browser that can display SVG
@@ -101,8 +102,10 @@ var Thenmap = {
         paths[i].setAttribute("class", paths[i].getAttribute("thenmap:class"));
       }
 
-      // Color the map if a spreadsheet key is given
-      if (self.settings.dataKey) {
+      // Color the map if data or a spreadsheet key is given
+      if (self.settings.data){
+        self.render(self.settings.data);
+      } else if (self.settings.dataKey) {
         self.ColorLayer.init(self.settings.dataKey);
       }
 
