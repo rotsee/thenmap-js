@@ -8,12 +8,12 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-uglify": "^3.3.0",
-    "grunt-string-to-js": "0.0.3",
+    "grunt": "^1.0.3",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-include-replace": "^5.0.0"
+    "grunt-contrib-uglify": "^3.4.0",
+    "grunt-include-replace": "^5.0.0",
+    "grunt-string-to-js": "0.0.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
