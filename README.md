@@ -73,7 +73,7 @@ In short: Feel free to use the code as you want.
  * 2.0.0
 
       * Use v2 of the Thenmap API. Some maps may look different, see [this blog post on what's new](http://jplusplus.org/en/blog/version-two-of-the-thenmap-api/).
-      * Default dataset is not `world-2` (nations of the world).
+      * Default dataset is now `world-2` (nations of the world).
 
  * 1.0.6
 
