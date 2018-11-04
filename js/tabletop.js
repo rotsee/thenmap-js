@@ -1,4 +1,4 @@
-/*Copyright (c) 2012-2013 Jonathan Soma
+/*Copyright (c) 2012-2018 Jonathan Soma
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -24,13 +24,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 (function() {
   'use strict';
 
-  var inNodeJS = typeof process !== 'undefined' && !process.browser;
-
-  var request = function requestNotProvided() {
-    throw new Error("The 'request' module is only available while running in Node.");
-  };
-  if(inNodeJS) { // This will get stripped out by Uglify, and Webpack will not include it
-    request = require('request');
+  var inNodeJS = false;
+  if (typeof process !== 'undefined' && !process.browser) {
+    inNodeJS = true;
+    var request = require('request'.trim()); //prevents browserify from bundling the module
   }
 
   var supportsCORS = false;
@@ -101,9 +98,6 @@ OTHER DEALINGS IN THE SOFTWARE.
     this.endpoint = options.endpoint || 'https://spreadsheets.google.com';
     this.singleton = !!options.singleton;
     this.simpleUrl = !!(options.simpleUrl || options.simple_url); //jshint ignore:line
-    this.authkey = options.authkey;
-    this.sheetPrivacy = this.authkey ? 'private' : 'public'
-
     this.callbackContext = options.callbackContext;
     // Default to on, unless there's a proxy, in which case it's default off
     this.prettyColumnNames = typeof(options.prettyColumnNames) === 'undefined' ? !options.proxy : options.prettyColumnNames;
@@ -154,7 +148,7 @@ OTHER DEALINGS IN THE SOFTWARE.
     this.modelNames = [];
     this.model_names = this.modelNames; //jshint ignore:line
 
-    this.baseJsonPath = '/feeds/worksheets/' + this.key + '/' + this.sheetPrivacy +'/basic?alt=';
+    this.baseJsonPath = '/feeds/worksheets/' + this.key + '/public/basic?alt=';
 
     if (inNodeJS || supportsCORS) {
       this.baseJsonPath += 'json';
@@ -362,7 +356,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         if (this.isWanted(data.feed.entry[i].content.$t)) {
           var linkIdx = data.feed.entry[i].link.length-1;
           var sheetId = data.feed.entry[i].link[linkIdx].href.split('/').pop();
-          var jsonPath = '/feeds/list/' + this.key + '/' + sheetId + '/' + this.sheetPrivacy + '/values?alt=';
+          var jsonPath = '/feeds/list/' + this.key + '/' + sheetId + '/public/values?alt=';
           if (inNodeJS || supportsCORS) {
             jsonPath += 'json';
           } else {
@@ -478,7 +472,7 @@ OTHER DEALINGS IN THE SOFTWARE.
       options.tabletop.log('Missing data for ' + this.name + ', make sure you didn\'t forget column headers');
       this.originalColumns = [];
       this.elements = [];
-      this.ready();
+      this.onReady.call(this);
       return;
     }
 
@@ -510,13 +504,17 @@ OTHER DEALINGS IN THE SOFTWARE.
         element.rowNumber = i + 1;
       }
 
+      if (options.postProcess) {
+        options.postProcess(element);
+      }
+
       this.elements.push(element);
     }
 
     if (options.prettyColumnNames) {
       this.fetchPrettyColumns();
     } else {
-      this.ready();
+      this.onReady.call(this);
     }
   };
 
@@ -540,16 +538,7 @@ OTHER DEALINGS IN THE SOFTWARE.
       });
     },
 
-    beforeReady: function() {
-      if(this.postProcess) {
-        for (i = 0, ilen = this.elements.length; i < ilen; i++) {
-          this.postProcess(element);
-        }
-      }
-    },
-
     ready: function() {
-      this.beforeReady();
       this.onReady.call(this);
     },
 
