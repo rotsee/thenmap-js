@@ -39,7 +39,7 @@ var Thenmap = {
     } else if (this.settings.data) {
       // FIXME: Refactor this, currently hacking into a class meant for Google Sheets rendering
       this.ColorLayer.render(this.settings.data);
-    } else if (self.settings.dataKey) {
+    } else if (this.settings.dataKey) {
       this.ColorLayer.init(this.settings.dataKey);
     }
   },

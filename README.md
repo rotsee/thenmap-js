@@ -76,8 +76,9 @@ In short: Feel free to use the code as you want.
 
 ## Changelog
 
- * 2.2.1
-     * Fix bug in colour method, where previous colors were not wiped out
+ * 2.2.2
+
+     * Iron out bugs in colour method
 
  * 2.2.0
       * Add colour method to recolour map

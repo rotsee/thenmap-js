@@ -1,6 +1,6 @@
 {
   "name": "thenmap-js",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "A simple tool for making choropleth map from Thenmap data",
   "main": "Gruntfile.js",
   "directories": {
