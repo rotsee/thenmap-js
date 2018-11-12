@@ -28,6 +28,12 @@ var Thenmap = {
    * @param {String} data[].colour Colour code for use in CSS
    */
   colour: function(data) {
+
+    if (this.css.styleSheet) {
+      this.css.styleSheet.cssText = "";  // IE
+    } else {
+      this.css.innerHTML = "";
+    }
     if (data) {
       this.ColorLayer.render(data);
     } else if (this.settings.data) {
