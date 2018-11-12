@@ -1,7 +1,7 @@
 var Thenmap = {
 
   debug: false,
-  apiUrl: "//thenmap-api.herokuapp.com/v2/",
+  apiUrl: "https://thenmap-api.herokuapp.com/v2/",
   el: null, //container element
   svg: null, //svg element
   css: null, //css element for dynamically adding styles
@@ -20,8 +20,32 @@ var Thenmap = {
     callback: null
   },
 
-  /* Entry point
-  */
+  /**
+   * Colorize the map if data is provided. This method is called on init.
+   *
+   * @param {Object[]} [data] Optional array of dictionaries with id and colour
+   * @param {String} data[].id Thenmap id's for political entities
+   * @param {String} data[].colour Colour code for use in CSS
+   */
+  colour: function(data) {
+    if (data) {
+      this.ColorLayer.render(data);
+    } else if (this.settings.data) {
+      // FIXME: Refactor this, currently hacking into a class meant for Google Sheets rendering
+      this.ColorLayer.render(this.settings.data);
+    } else if (self.settings.dataKey) {
+      this.ColorLayer.init(this.settings.dataKey);
+    }
+  },
+
+  /**
+   * Entry point
+   *
+   * @param {string} elIdentifier ID of the map container elemtent
+   * @param {Object} options
+   * @param {Number} options.width=800 Width in pixels
+   * @param {Number} options.height=null Height in pixels
+   */
   init: function(elIdentifier, options) {
     var self = this;
     self.ColorLayer.thenmap = self;
@@ -102,13 +126,8 @@ var Thenmap = {
         paths[i].setAttribute("class", paths[i].getAttribute("thenmap:class"));
       }
 
-      // Color the map if data or a spreadsheet key is given
-      if (self.settings.data){
-        // FIXME: Refactor this, currently hacking into a class meant for Google Sheets rendering
-        self.ColorLayer.render(self.settings.data);
-      } else if (self.settings.dataKey) {
-        self.ColorLayer.init(self.settings.dataKey);
-      }
+      // Apply any colouring
+      self.colour();
 
       if (typeof self.settings.callback === "function"){
         self.settings.callback(null, this);
@@ -229,7 +248,7 @@ var Thenmap = {
 
       /* build and apply CSS */
       var cssCode = "";
-      for (var color in colors){
+      for (var color in colors) {
         cssCode += colors[color].join(", ") + "{fill:" + color + "}\n";
       }
       self.thenmap.extendCss(cssCode);

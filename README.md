@@ -76,10 +76,14 @@ In short: Feel free to use the code as you want.
 
 ## Changelog
 
+ * 2.2.0
+      * Add colour method to recolour map
+
  * 2.1.0
+
       * Upgrade Tabletop.js to `1.5.4`
       * Add data option to pass coloring data directly
-      * Rename <s>`dataset`</s> to `map`, add deprecation notice-
+      * Rename <s>`dataset`</s> to `map`, add deprecation notice.
 
  * 2.0.0
 
